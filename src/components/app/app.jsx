@@ -1,17 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
-import PublicRoute from '../publicRoute/publicRoute';
-import Home from '../../pages/home/Home';
 import EventsPage from '../../pages/events/EventsPage';
+import PublicRoute from '../publicRoute/publicRoute';
+import Navbar from '../navbar/Navbar';
 
 function App() {
   return (
     <div>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<PublicRoute component={Home} />} />
-        <Route
-          path="/events"
-          element={<PublicRoute component={EventsPage} />}
-        />
+        <Route path="/" element={<PublicRoute component={EventsPage} />} />
       </Routes>
     </div>
   );
