@@ -3,9 +3,9 @@ import authReducer from './auth/authSlice';
 import { injectStore } from '../utils/axiosConfig';
 
 const store = configureStore({
-	reducer: {
-		auth: authReducer
-	}
+  reducer: {
+    auth: authReducer
+  }
 });
 
 injectStore(store);
