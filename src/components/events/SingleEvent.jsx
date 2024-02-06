@@ -1,9 +1,17 @@
 import React from 'react';
 import EventImage from '../../assets/toutix-home-bg.jpeg';
+import { useNavigate } from 'react-router';
 
 const SingleEvent = () => {
+  const navigate = useNavigate();
+  const handleEventCardClick = () => {
+    navigate(`/events/123`);
+  };
   return (
-    <div className="min-h-[300px] relative ">
+    <div
+      onClick={handleEventCardClick}
+      className="min-h-[300px] relative cursor-pointer "
+    >
       <img src={EventImage} alt="" className="object-cover w-full h-full" />
       <div className="absolute inset-0 z-10 flex flex-col justify-between bg-gradient-to-t from-gray-800 to-transparent ">
         <div className="flex items-start justify-between px-8 text-xs ">
