@@ -21,6 +21,8 @@ const EventsPage = () => {
             <SingleEvent />
             <SingleEvent />
             <SingleEvent />
+            <SingleEvent />
+            <SingleEvent />
           </div>
         </div>
       </div>
