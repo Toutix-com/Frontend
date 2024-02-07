@@ -1,5 +1,8 @@
 module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+    './node_modules/tw-elements-react/dist/js/**/*.js'
+  ],
   theme: {
     backgroundImage: {
       none: 'none',
@@ -18,5 +21,5 @@ module.exports = {
       'home-bg-banner': 'url(./assets/toutix-home-bg.jpeg )'
     }
   },
-  plugins: []
+  plugins: [require('tw-elements-react/dist/plugin.cjs')]
 };
