@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CheckoutModal from '../checkout/CheckoutModal';
 
 const TicketSelect = ({ price, seatName, ticketName }) => {
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   return (
     <div className="flex flex-col gap-6 p-6 bg-gray-100 rounded-md shadow-md">
       <div className="flex gap-6">
@@ -15,19 +17,30 @@ const TicketSelect = ({ price, seatName, ticketName }) => {
           <p className="text-gray-500">1 Ticket</p>
         </div>
       </div>
-      <div className="flex flex-wrap items-center gap-2 ">
-        {[...Array(10).keys()].map((item, idx) => (
-          <div
-            key={idx}
-            className="p-2 px-3 text-sm text-gray-500 bg-gray-100 border border-gray-500 rounded-md cursor-pointer md:px-4 md:text-lg"
-          >
-            {item + 1}
-          </div>
-        ))}
+      <div className="flex flex-col gap-2">
+        <p className="text-sm text-gray-400">Select Number of Seats</p>
+        <div className="flex flex-wrap items-center gap-2 ">
+          {[...Array(10).keys()].map((item, idx) => (
+            <div
+              key={idx}
+              className="p-2 px-3 text-sm text-gray-500 bg-gray-100 border border-gray-500 rounded-md cursor-pointer md:px-4 md:text-lg"
+            >
+              {item + 1}
+            </div>
+          ))}
+        </div>
       </div>
-      <button className="p-3 px-6 ml-auto text-sm font-medium text-center text-white bg-blue-500 rounded-md">
+
+      <button
+        onClick={() => setShowCheckoutModal(true)}
+        className="p-3 px-6 ml-auto text-sm font-medium text-center text-white bg-blue-500 rounded-md"
+      >
         Proceed to Checkout
       </button>
+      <CheckoutModal
+        showModal={showCheckoutModal}
+        setShowModal={setShowCheckoutModal}
+      />
     </div>
   );
 };

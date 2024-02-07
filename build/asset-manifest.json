@@ -1,17 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.479b0a69.css",
-    "main.js": "/static/js/main.82312bc7.js",
+    "main.css": "/static/css/main.edcd9468.css",
+    "main.js": "/static/js/main.5e35d3fd.js",
+    "static/js/23.1d6f53b5.chunk.js": "/static/js/23.1d6f53b5.chunk.js",
+    "static/js/81.0e58cb11.chunk.js": "/static/js/81.0e58cb11.chunk.js",
     "static/js/787.f0004015.chunk.js": "/static/js/787.f0004015.chunk.js",
     "static/media/toutix-home-bg.jpeg": "/static/media/toutix-home-bg.c977f143a95035e3220c.jpeg",
+    "static/media/toutix-logo-transparent.png": "/static/media/toutix-logo-transparent.8d4f00c7492c6ece11e7.png",
     "service-worker.js": "/service-worker.js",
     "index.html": "/index.html",
-    "main.479b0a69.css.map": "/static/css/main.479b0a69.css.map",
-    "main.82312bc7.js.map": "/static/js/main.82312bc7.js.map",
+    "main.edcd9468.css.map": "/static/css/main.edcd9468.css.map",
+    "main.5e35d3fd.js.map": "/static/js/main.5e35d3fd.js.map",
+    "23.1d6f53b5.chunk.js.map": "/static/js/23.1d6f53b5.chunk.js.map",
+    "81.0e58cb11.chunk.js.map": "/static/js/81.0e58cb11.chunk.js.map",
     "787.f0004015.chunk.js.map": "/static/js/787.f0004015.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.479b0a69.css",
-    "static/js/main.82312bc7.js"
+    "static/css/main.edcd9468.css",
+    "static/js/main.5e35d3fd.js"
   ]
 }
