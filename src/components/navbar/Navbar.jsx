@@ -40,7 +40,9 @@ const Navbar = () => {
             <Link className="block px-3 py-2 md:py-0">Contact</Link>
           </TERipple>
           <TERipple>
-            <Link className="block px-3 py-2 md:py-0">Event Organizer</Link>
+            <Link to={routes.createEvent} className="block px-3 py-2 md:py-0">
+              Create Event
+            </Link>
           </TERipple>
           <TERipple>
             <button

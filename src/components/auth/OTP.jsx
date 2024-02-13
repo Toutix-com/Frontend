@@ -37,32 +37,12 @@ const ForgetPassword = () => {
           }}
         />
       </div>
-      <label className="flex flex-col gap-1">
-        <p className="pl-2">New Password*</p>
-        <input
-          type="password"
-          placeholder="********"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg"
-        />
-      </label>
-      <label className="flex flex-col gap-1">
-        <p className="pl-2">Confirm Password*</p>
-        <input
-          type="password"
-          placeholder="********"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg"
-        />
-      </label>
 
       <button
         onClick={handleResetPassword}
         className="w-full p-3 text-white bg-blue-500 rounded-md"
       >
-        Reset Password
+        Validate
       </button>
     </div>
   );

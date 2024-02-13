@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
+import { MdClose } from 'react-icons/md';
 import { TEModal, TEModalContent, TEModalDialog } from 'tw-elements-react';
 import Login from './Login';
-import Signup from './Signup';
-import ForgetPassword from './ForgetPassword';
-import { MdClose } from 'react-icons/md';
+import ForgetPassword from './OTP';
 
 const AuthModal = ({ showModal, setShowModal }) => {
   const [tab, setTab] = useState('signin');
@@ -20,34 +19,10 @@ const AuthModal = ({ showModal, setShowModal }) => {
                 setTab('signin');
               }}
             />
-            <div className="flex justify-between mb-6">
-              <button
-                className={`mr-2 w-full px-4 py-2   ${
-                  tab === 'signin'
-                    ? ' text-blue-500 border-b-2 border-blue-500'
-                    : 'text-gray-700'
-                }`}
-                onClick={() => setTab('signin')}
-              >
-                Sign In
-              </button>
-              <button
-                className={`px-4 w-full py-2  ${
-                  tab === 'signup'
-                    ? ' text-blue-500 border-b-2 border-blue-500'
-                    : 'text-gray-700'
-                }`}
-                onClick={() => setTab('signup')}
-              >
-                Sign Up
-              </button>
-            </div>
 
             {tab === 'signin' && <Login setTab={setTab} tab={tab} />}
 
-            {tab === 'signup' && <Signup setTab={setTab} tab={tab} />}
-
-            {tab === 'reset' && <ForgetPassword setTab={setTab} tab={tab} />}
+            {tab === 'otp' && <ForgetPassword setTab={setTab} tab={tab} />}
           </div>
         </TEModalContent>
       </TEModalDialog>

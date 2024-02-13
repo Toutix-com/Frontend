@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import reportWebVitals from './reportWebVitals';
 import App from './components/app/app';
+import { register } from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -16,6 +17,6 @@ root.render(
     </Router>
   </Provider>
 );
-ServiceWorkerRegistration.register();
+register();
 
 reportWebVitals();
