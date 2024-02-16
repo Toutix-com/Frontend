@@ -1,0 +1,47 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import {
+  TEDropdown,
+  TEDropdownItem,
+  TEDropdownMenu,
+  TEDropdownToggle,
+  TERipple
+} from 'tw-elements-react';
+
+const UserDropdown = () => {
+  return (
+    <TEDropdown className="flex justify-center">
+      <TERipple rippleColor="light">
+        <TEDropdownToggle tag="a" className="cursor-pointer">
+          <img
+            src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+            className="object-cover w-10 h-10 rounded-full"
+            alt="Avatar"
+          />
+        </TEDropdownToggle>
+      </TERipple>
+
+      <TEDropdownMenu className="mt-6">
+        <TEDropdownItem>
+          <Link
+            to={`/users/123/tickets`}
+            className="block w-full min-w-[160px] cursor-pointer whitespace-nowrap bg-transparent px-4 py-2 text-sm text-left font-normal pointer-events-auto text-neutral-700 bg-white hover:bg-neutral-100 active:text-neutral-800 active:bg-neutral-100 focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none active:no-underline "
+          >
+            My Tickets
+          </Link>
+        </TEDropdownItem>
+
+        <TEDropdownItem>
+          <Link
+            to={`/users/456/events`}
+            className="block w-full min-w-[160px] cursor-pointer whitespace-nowrap bg-transparent px-4 py-2 text-sm text-left font-normal pointer-events-auto text-neutral-700 bg-white hover:bg-neutral-100 active:text-neutral-800 active:bg-neutral-100 focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none active:no-underline "
+          >
+            My Events
+          </Link>
+        </TEDropdownItem>
+      </TEDropdownMenu>
+    </TEDropdown>
+  );
+};
+
+export default UserDropdown;
