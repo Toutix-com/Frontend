@@ -1,14 +1,16 @@
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { routes } from '../../constants/routes';
 
 const PrivateRoute = ({ component: Component, ...props }) => {
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
+  const user = true;
 
   return (
     <>
       {!user ? (
         <Navigate
-          to={{ pathname: '/login', state: { from: props.location } }}
+          to={{ pathname: routes.login, state: { from: props.location } }}
           replace
         />
       ) : (
