@@ -1,21 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  loginUser,
-  logoutUser,
-  registerUser,
-  verifyUserDetails
-} from './authActions';
+import { browserStorage } from '../../constants/storage';
+import { Cookies } from 'react-cookie';
 
-const userAccessToken = localStorage.getItem('userAccessToken')
-  ? localStorage.getItem('userAccessToken')
+const cookies = new Cookies();
+
+const userEmail = localStorage.getItem(browserStorage.email)
+  ? localStorage.getItem(browserStorage.email)
+  : null;
+const userID = localStorage.getItem(browserStorage.userID)
+  ? localStorage.getItem(browserStorage.userID)
   : null;
 
 const initialState = {
-  loading: false,
-  user: null,
-  accessToken: userAccessToken,
-  error: null,
-  success: false
+  user: {
+    email: userEmail,
+    userID: userID
+  },
+  isLoggedIn: !!userEmail,
+  accessToken: cookies.get(browserStorage.accessToken) || null,
+  isAuthModalOpen: false
 };
 
 const authSlice = createSlice({
@@ -24,71 +27,34 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action) => {
       state.user = action.payload.user;
-      state.accessToken = action.payload.access_token;
-
-      localStorage.setItem('userAccessToken', action.payload.access_token);
-    }
-  },
-  extraReducers: {
-    [registerUser.pending]: (state) => {
-      state.loading = true;
+      state.accessToken = action.payload.accessToken;
+      cookies.set(browserStorage.accessToken, action.payload.accessToken, {
+        path: '/',
+        maxAge: 3600 * 24 * 7
+      });
+      localStorage.setItem(
+        browserStorage.email,
+        action.payload.action.payload.user.email
+      );
+      localStorage.setItem(
+        browserStorage.userID,
+        action.payload.action.payload.user.userID
+      );
     },
-    [registerUser.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.user = action.payload.message;
-      state.error = null;
-      state.success = true;
-    },
-    [registerUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.error;
-    },
-
-    [loginUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [loginUser.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.user = action.payload.user;
-      state.accessToken = action.payload.access_token;
-      localStorage.setItem('userAccessToken', action.payload.access_token);
-      state.error = null;
-    },
-    [loginUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.error;
-    },
-
-    [logoutUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [logoutUser.fulfilled]: (state) => {
-      state.loading = false;
+    logout: (state) => {
       state.user = null;
+      state.isLoggedIn = false;
       state.accessToken = null;
-      localStorage.removeItem('userAccessToken');
-      state.success = true;
-      state.error = null;
+      cookies.remove(browserStorage.accessToken);
+      localStorage.removeItem(browserStorage.email);
+      localStorage.removeItem(browserStorage.userID);
     },
-    [logoutUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.error;
-    },
-
-    [verifyUserDetails.pending]: (state) => {
-      state.loading = true;
-    },
-    [verifyUserDetails.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.user = action.payload.user_details;
-      state.error = null;
-    },
-    [verifyUserDetails.rejected]: (state) => {
-      state.loading = false;
+    toggleAuthModal: (state, action) => {
+      state.isAuthModalOpen = action.payload;
     }
   }
 });
 
 export default authSlice.reducer;
 
-export const { setCredentials } = authSlice.actions;
+export const { setCredentials, logout, toggleAuthModal } = authSlice.actions;

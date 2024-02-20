@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
-import { setCredentials } from '../store/auth/authSlice';
 
 let store;
 
@@ -21,12 +20,16 @@ export const apiErrorResponse = (error) => {
   }
 };
 
-const instance = axios.create({
-  baseURL: 'http://localhost:3000',
+export const publicAxiosInstance = axios.create({
+  baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api',
+  withCredentials: true
+});
+export const privateAxiosInstance = axios.create({
+  baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api',
   withCredentials: true
 });
 
-instance.interceptors.request.use(
+privateAxiosInstance.interceptors.request.use(
   (config) => {
     const { accessToken } = store.getState().auth;
 
@@ -41,53 +44,3 @@ instance.interceptors.request.use(
   },
   (err) => Promise.reject(err)
 );
-
-let calledOnce = false;
-
-instance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response !== null) {
-      if (error.response.status === 403 && !originalRequest._retry) {
-        if (!calledOnce) {
-          calledOnce = true;
-
-          try {
-            const refreshData = await instance.get('/refresh_token/verify');
-
-            if (refreshData) {
-              const { user } = store.getState().auth;
-              axios.defaults.headers.common.Authorization = `Bearer ${refreshData.data.access_token}`;
-
-              store.dispatch(
-                setCredentials({
-                  user,
-                  access_token: refreshData.data.access_token
-                })
-              );
-
-              return instance(originalRequest);
-            }
-          } catch (error) {
-            if (error.response && error.response.data) {
-              return Promise.reject(error.response.data);
-            }
-
-            return Promise.reject(error);
-          } finally {
-            originalRequest._retry = true;
-            calledOnce = false;
-          }
-        }
-      }
-    }
-
-    return Promise.reject(error);
-  }
-);
-
-export default instance;

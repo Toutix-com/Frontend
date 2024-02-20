@@ -14,10 +14,20 @@ import Navbar from '../navbar/Navbar';
 import PrivateRoute from '../privateRoute/PrivateRoute';
 import PublicRoute from '../publicRoute/PublicRoute';
 import LoginPage from '../../pages/login/LoginPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        newestOnTop={true}
+        hideProgressBar={true}
+        closeOnClick
+        rtl={false}
+      />
       <Navbar />
       <Routes>
         <Route

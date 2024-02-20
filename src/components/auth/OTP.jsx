@@ -1,13 +1,46 @@
 import React, { useState } from 'react';
 import OTPInput from 'react-otp-input';
+import { browserStorage } from '../../constants/storage';
+import { publicAxiosInstance } from '../../utils/axiosConfig';
+import { useCookies } from 'react-cookie';
+import { showToastError } from '../../utils/toast';
 
 const ForgetPassword = () => {
   const [otp, setOtp] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [cookies, _, removeCookie] = useCookies([browserStorage.loginEmail]);
 
-  const handleResetPassword = () => {
-    //handle reset password logic
+  const validateOTP = (otp) => {
+    const regex = /^\d+$/;
+    return regex.test(otp);
+  };
+
+  const handleOTPValidation = async () => {
+    if (!validateOTP(otp)) {
+      setError('Enter a Valid OTP');
+      return;
+    }
+    try {
+      const email = cookies[browserStorage.loginEmail];
+      if (!email) return;
+      setIsLoading(true);
+      const response = await publicAxiosInstance.post('/auth/validateOTP', {
+        email,
+        otp
+      });
+      console.log(response.data);
+      setIsLoading(false);
+      removeCookie(browserStorage.loginEmail);
+    } catch (err) {
+      console.log(err.message);
+      if (err.response.status === 400 && err.response.data.error) {
+        showToastError(err.response.data.error);
+      } else {
+        setError(err.message);
+      }
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -36,13 +69,14 @@ const ForgetPassword = () => {
             outline: 'none'
           }}
         />
+        {error && error.length > 0 && <p className="text-red-500">{error}</p>}
       </div>
 
       <button
-        onClick={handleResetPassword}
+        onClick={handleOTPValidation}
         className="w-full p-3 text-white bg-blue-500 rounded-md"
       >
-        Validate
+        {isLoading ? 'Validating...' : 'Validate'}
       </button>
     </div>
   );

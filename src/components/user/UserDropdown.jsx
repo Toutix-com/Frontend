@@ -7,8 +7,14 @@ import {
   TEDropdownToggle,
   TERipple
 } from 'tw-elements-react';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../store/auth/authSlice';
 
 const UserDropdown = () => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <TEDropdown className="flex justify-center">
       <TERipple rippleColor="light">
@@ -38,6 +44,14 @@ const UserDropdown = () => {
           >
             My Events
           </Link>
+        </TEDropdownItem>
+        <TEDropdownItem>
+          <button
+            onClick={handleLogout}
+            className="block w-full min-w-[160px] cursor-pointer whitespace-nowrap bg-blue-500 text-white px-4 py-2 text-sm text-left font-normal pointer-events-auto  "
+          >
+            Logout
+          </button>
         </TEDropdownItem>
       </TEDropdownMenu>
     </TEDropdown>

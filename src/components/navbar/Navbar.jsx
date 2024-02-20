@@ -7,10 +7,13 @@ import AuthModal from '../auth/AuthModal';
 import { routes } from '../../constants/routes';
 import UserDropdown from '../user/UserDropdown';
 import { MdClose } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleAuthModal } from '../../store/auth/authSlice';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const { isAuthModalOpen } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -44,7 +47,7 @@ const Navbar = () => {
             </TERipple>
             <TERipple>
               <button
-                onClick={() => setShowModal(true)}
+                onClick={() => dispatch(toggleAuthModal(true))}
                 className="p-2 px-4 mt-4 font-medium text-white bg-blue-500 rounded-md md:ml-6 md:mt-0"
               >
                 Login
@@ -65,8 +68,8 @@ const Navbar = () => {
       </div>
 
       <AuthModal
-        showModal={showModal}
-        setShowModal={setShowModal}
+        showModal={isAuthModalOpen}
+        setShowModal={(value) => dispatch(toggleAuthModal(value))}
         enableClose
       />
     </div>
