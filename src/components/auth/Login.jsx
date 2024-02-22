@@ -28,16 +28,17 @@ const Login = ({ setTab }) => {
     setCookie(browserStorage.loginEmail, email);
     try {
       const response = await publicAxiosInstance.post('/auth/login', { email });
-      if (!response.ok) {
-        throw new Error('Error signing in');
-      }
       console.log(response.data);
       setTab('otp');
       setIsLoading(false);
       // Handle the response data as needed
     } catch (err) {
-      if (err.response.status === 400 && err.response.data.error) {
-        showToastError(err.response.data.error);
+      if (
+        err?.response?.status &&
+        err?.response?.status === 400 &&
+        err?.response?.data?.error
+      ) {
+        showToastError(err?.response?.data?.error);
       } else {
         setError(err.message);
       }

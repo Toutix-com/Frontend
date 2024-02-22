@@ -21,12 +21,10 @@ export const apiErrorResponse = (error) => {
 };
 
 export const publicAxiosInstance = axios.create({
-  baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api',
-  withCredentials: true
+  baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api'
 });
 export const privateAxiosInstance = axios.create({
-  baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api',
-  withCredentials: true
+  baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api'
 });
 
 privateAxiosInstance.interceptors.request.use(
