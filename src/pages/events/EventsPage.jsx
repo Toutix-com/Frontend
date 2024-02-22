@@ -4,7 +4,7 @@ import { publicAxiosInstance } from '../../utils/axiosConfig';
 
 const EventsPage = () => {
   const [events, setEvents] = useState([]); // Replace with your actual events data
-  const [isLoading, setIsLoading] = useState(false); // Replace with your actual loading state
+  const [isLoading, setIsLoading] = useState(true); // Replace with your actual loading state
 
   const fetchEventsData = async () => {
     setIsLoading(true);
@@ -15,6 +15,7 @@ const EventsPage = () => {
       setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
