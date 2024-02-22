@@ -3,13 +3,16 @@ import OTPInput from 'react-otp-input';
 import { browserStorage } from '../../constants/storage';
 import { publicAxiosInstance } from '../../utils/axiosConfig';
 import { useCookies } from 'react-cookie';
-import { showToastError } from '../../utils/toast';
+import { showToastError, showToastSuccess } from '../../utils/toast';
+import { useDispatch } from 'react-redux';
+import { setCredentials, toggleAuthModal } from '../../store/auth/authSlice';
 
 const ForgetPassword = () => {
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [cookies, _, removeCookie] = useCookies([browserStorage.loginEmail]);
+  const [cookies, , removeCookie] = useCookies([browserStorage.loginEmail]);
+  const dispatch = useDispatch();
 
   const validateOTP = (otp) => {
     const regex = /^\d+$/;
@@ -29,15 +32,22 @@ const ForgetPassword = () => {
         email,
         otp
       });
-      console.log(response.data);
       setIsLoading(false);
+      dispatch(
+        setCredentials({
+          email: response.data.email,
+          userID: response.data.user_id,
+          accessToken: response.data.access_token,
+          first_time_login: response.data.first_time_login
+        })
+      );
+      showToastSuccess(response.data.message);
       removeCookie(browserStorage.loginEmail);
+      dispatch(toggleAuthModal(false));
     } catch (err) {
       console.log(err.message);
-      if (err.response.status === 400 && err.response.data.error) {
-        showToastError(err.response.data.error);
-      } else {
-        setError(err.message);
+      if (err?.response?.status === 400 && err?.response?.data?.error) {
+        showToastError(err?.response?.data?.error);
       }
       setIsLoading(false);
     }

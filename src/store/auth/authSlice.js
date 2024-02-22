@@ -14,10 +14,11 @@ const userID = localStorage.getItem(browserStorage.userID)
 const initialState = {
   user: {
     email: userEmail,
-    userID: userID
+    userID: userID,
+    isFirstTimeLogin: false,
+    accessToken: cookies.get(browserStorage.accessToken) || null
   },
   isLoggedIn: !!userEmail,
-  accessToken: cookies.get(browserStorage.accessToken) || null,
   isAuthModalOpen: false
 };
 
@@ -26,25 +27,21 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      state.user = action.payload.user;
-      state.accessToken = action.payload.accessToken;
+      state.user.email = action.payload.email;
+      state.user.userID = action.payload.userID;
+      state.user.accessToken = action.payload.accessToken;
+      state.user.isFirstTimeLogin = action.payload.first_time_login;
+      state.isLoggedIn = true;
       cookies.set(browserStorage.accessToken, action.payload.accessToken, {
         path: '/',
         maxAge: 3600 * 24 * 7
       });
-      localStorage.setItem(
-        browserStorage.email,
-        action.payload.action.payload.user.email
-      );
-      localStorage.setItem(
-        browserStorage.userID,
-        action.payload.action.payload.user.userID
-      );
+      localStorage.setItem(browserStorage.email, action.payload.email);
+      localStorage.setItem(browserStorage.userID, action.payload.userID);
     },
     logout: (state) => {
       state.user = null;
       state.isLoggedIn = false;
-      state.accessToken = null;
       cookies.remove(browserStorage.accessToken);
       localStorage.removeItem(browserStorage.email);
       localStorage.removeItem(browserStorage.userID);

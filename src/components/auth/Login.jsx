@@ -3,13 +3,16 @@ import { useCookies } from 'react-cookie';
 import { FcGoogle } from 'react-icons/fc';
 import { browserStorage } from '../../constants/storage';
 import { publicAxiosInstance } from '../../utils/axiosConfig';
-import { showToastError } from '../../utils/toast';
+import { showToastError, showToastSuccess } from '../../utils/toast';
 
 const Login = ({ setTab }) => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [_, setCookie] = useCookies([browserStorage.loginEmail]);
+  const [_, setCookie] = useCookies([
+    browserStorage.loginEmail,
+    browserStorage.otpExpiry
+  ]);
 
   const validateEmail = (email) => {
     var re =
@@ -29,6 +32,9 @@ const Login = ({ setTab }) => {
     try {
       const response = await publicAxiosInstance.post('/auth/login', { email });
       console.log(response.data);
+      showToastSuccess(response.data.message);
+      alert('Please copy your OTP for now ' + response.data.otp);
+      setCookie(browserStorage.otpExpiry, response.data.otpExpiry);
       setTab('otp');
       setIsLoading(false);
       // Handle the response data as needed

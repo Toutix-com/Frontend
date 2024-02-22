@@ -12,7 +12,9 @@ import { toggleAuthModal } from '../../store/auth/authSlice';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthModalOpen } = useSelector((state) => state.auth);
+  const { isAuthModalOpen, user, isLoggedIn } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
 
   const toggleNavbar = () => {
@@ -45,19 +47,22 @@ const Navbar = () => {
             <TERipple>
               <Link className="block px-3 py-2 md:py-0">Contact</Link>
             </TERipple>
-            <TERipple>
-              <button
-                onClick={() => dispatch(toggleAuthModal(true))}
-                className="p-2 px-4 mt-4 font-medium text-white bg-blue-500 rounded-md md:ml-6 md:mt-0"
-              >
-                Login
-              </button>
-            </TERipple>
+            {!isLoggedIn && !user && (
+              <TERipple>
+                <button
+                  onClick={() => dispatch(toggleAuthModal(true))}
+                  className="p-2 px-4 mt-4 font-medium text-white bg-blue-500 rounded-md md:ml-6 md:mt-0"
+                >
+                  Login
+                </button>
+              </TERipple>
+            )}
           </ul>
         </nav>
 
         <div className="flex items-center gap-4">
-          <UserDropdown />
+          {isLoggedIn && user && <UserDropdown />}
+
           <button
             className="block md:hidden focus:outline-none"
             onClick={toggleNavbar}

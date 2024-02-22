@@ -37,7 +37,7 @@ const SingleEventDetails = ({ event }) => {
         <div className="flex flex-col gap-1 text-gray-600 ">
           <h2 className="text-2xl font-medium text-gray-800">Location</h2>
           <p className="text-sm font-light">
-            {location?.LocationName} , {location?.Address}
+            {location?.Name} , {location?.Address}
           </p>
         </div>
         <div className="flex flex-col gap-1 text-gray-600 ">
