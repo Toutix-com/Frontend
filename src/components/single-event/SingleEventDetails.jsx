@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import React, { useMemo } from 'react';
+import ShareEvent from './ShareEvent';
 
 const SingleEventDetails = ({ event }) => {
   const { DateTime, Name, image_url, location, Description, EndTime } = event;
@@ -13,9 +14,13 @@ const SingleEventDetails = ({ event }) => {
     () => format(new Date(EndTime), 'dd MMM,yyyy hh:mm a'),
     [EndTime]
   );
+
   return (
     <div className="flex flex-col w-full max-w-3xl gap-8 mx-auto">
-      <img className="w-full h-[300px] object-cover" src={image_url} alt="" />
+      <div className="relative flex gap-6 items-end">
+        <img className="w-full h-[300px] object-cover" src={image_url} alt="" />
+        <ShareEvent />
+      </div>
       <div className="flex flex-col gap-1 text-gray-600 ">
         <h2 className="text-2xl font-medium text-gray-800">Event</h2>
         <p className="text-sm font-light">{Name}</p>

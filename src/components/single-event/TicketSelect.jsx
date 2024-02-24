@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import CheckoutModal from '../checkout/CheckoutModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleAuthModal } from '../../store/auth/authSlice';
 
 const TicketSelect = ({ price, seatName, ticketName }) => {
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleCheckout = () => {
+    if (!isLoggedIn) {
+      dispatch(toggleAuthModal(true));
+    } else {
+      setShowCheckoutModal(true);
+    }
+  };
   return (
     <div className="flex flex-col gap-6 p-6 bg-gray-100 rounded-md shadow-md">
       <div className="flex gap-6">
@@ -32,7 +44,7 @@ const TicketSelect = ({ price, seatName, ticketName }) => {
       </div>
 
       <button
-        onClick={() => setShowCheckoutModal(true)}
+        onClick={handleCheckout}
         className="p-3 px-6 ml-auto text-sm font-medium text-center text-white bg-blue-500 rounded-md"
       >
         Proceed to Checkout

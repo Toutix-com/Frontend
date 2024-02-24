@@ -3,5 +3,6 @@ export const browserStorage = {
   otpExpiry: 'otpExpiry',
   email: 'email',
   loginEmail: 'loginEmail',
-  userID: 'userID'
+  isLoggedIn: 'isLoggedIn',
+  user: 'toutixUser'
 };

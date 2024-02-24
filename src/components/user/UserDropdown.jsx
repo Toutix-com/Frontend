@@ -9,10 +9,16 @@ import {
 } from 'tw-elements-react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/auth/authSlice';
+import { browserStorage } from '../../constants/storage';
+import { useCookies } from 'react-cookie';
 
 const UserDropdown = () => {
+  const [cookies, setCookie, removeCookie] = useCookies([
+    browserStorage.accessToken
+  ]);
   const dispatch = useDispatch();
   const handleLogout = () => {
+    removeCookie(browserStorage.accessToken, { path: '/' });
     dispatch(logout());
   };
   return (

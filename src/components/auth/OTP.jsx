@@ -11,7 +11,11 @@ const ForgetPassword = () => {
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [cookies, , removeCookie] = useCookies([browserStorage.loginEmail]);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    browserStorage.loginEmail,
+    browserStorage.accessToken,
+    browserStorage.otpExpiry
+  ]);
   const dispatch = useDispatch();
 
   const validateOTP = (otp) => {
@@ -19,7 +23,8 @@ const ForgetPassword = () => {
     return regex.test(otp);
   };
 
-  const handleOTPValidation = async () => {
+  const handleOTPValidation = async (e) => {
+    e.preventDefault();
     if (!validateOTP(otp)) {
       setError('Enter a Valid OTP');
       return;
@@ -28,21 +33,26 @@ const ForgetPassword = () => {
       const email = cookies[browserStorage.loginEmail];
       if (!email) return;
       setIsLoading(true);
-      const response = await publicAxiosInstance.post('/auth/validateOTP', {
+      const { data } = await publicAxiosInstance.post('/auth/validateOTP', {
         email,
         otp
       });
-      setIsLoading(false);
+      console.log(data);
       dispatch(
         setCredentials({
-          email: response.data.email,
-          userID: response.data.user_id,
-          accessToken: response.data.access_token,
-          first_time_login: response.data.first_time_login
+          email: data.email,
+          userID: data.user_id,
+          isFirstTimeLogin: data.first_time_login
         })
       );
-      showToastSuccess(response.data.message);
+      setCookie(browserStorage.accessToken, data.access_token, {
+        path: '/',
+        maxAge: 3600 * 24 * 7
+      });
+      showToastSuccess(data.message);
+      setIsLoading(false);
       removeCookie(browserStorage.loginEmail);
+      removeCookie(browserStorage.otpExpiry);
       dispatch(toggleAuthModal(false));
     } catch (err) {
       console.log(err.message);
@@ -54,7 +64,10 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 text-sm ">
+    <form
+      onSubmit={handleOTPValidation}
+      className="flex flex-col gap-6 text-sm "
+    >
       <p className="text-center text-gray-600">
         Enter OTP sent to abcd@email.com
       </p>
@@ -83,12 +96,12 @@ const ForgetPassword = () => {
       </div>
 
       <button
-        onClick={handleOTPValidation}
+        type="submit"
         className="w-full p-3 text-white bg-blue-500 rounded-md"
       >
         {isLoading ? 'Validating...' : 'Validate'}
       </button>
-    </div>
+    </form>
   );
 };
 

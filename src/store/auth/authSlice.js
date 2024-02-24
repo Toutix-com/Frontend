@@ -1,24 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { browserStorage } from '../../constants/storage';
-import { Cookies } from 'react-cookie';
 
-const cookies = new Cookies();
-
-const userEmail = localStorage.getItem(browserStorage.email)
-  ? localStorage.getItem(browserStorage.email)
+const storedUser = localStorage.getItem(browserStorage.user)
+  ? localStorage.getItem(browserStorage.user)
   : null;
-const userID = localStorage.getItem(browserStorage.userID)
-  ? localStorage.getItem(browserStorage.userID)
-  : null;
+const isLoggedIn = localStorage.getItem(browserStorage.isLoggedIn)
+  ? localStorage.getItem(browserStorage.isLoggedIn)
+  : false;
 
 const initialState = {
-  user: {
-    email: userEmail,
-    userID: userID,
-    isFirstTimeLogin: false,
-    accessToken: cookies.get(browserStorage.accessToken) || null
-  },
-  isLoggedIn: !!userEmail,
+  user: storedUser,
+  isLoggedIn: Boolean(isLoggedIn),
   isAuthModalOpen: false
 };
 
@@ -27,24 +19,16 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      state.user.email = action.payload.email;
-      state.user.userID = action.payload.userID;
-      state.user.accessToken = action.payload.accessToken;
-      state.user.isFirstTimeLogin = action.payload.first_time_login;
+      state.user = action.payload;
       state.isLoggedIn = true;
-      cookies.set(browserStorage.accessToken, action.payload.accessToken, {
-        path: '/',
-        maxAge: 3600 * 24 * 7
-      });
-      localStorage.setItem(browserStorage.email, action.payload.email);
-      localStorage.setItem(browserStorage.userID, action.payload.userID);
+      localStorage.setItem(browserStorage.user, action.payload);
+      localStorage.setItem(browserStorage.isLoggedIn, true);
     },
     logout: (state) => {
       state.user = null;
       state.isLoggedIn = false;
-      cookies.remove(browserStorage.accessToken);
-      localStorage.removeItem(browserStorage.email);
-      localStorage.removeItem(browserStorage.userID);
+      localStorage.removeItem(browserStorage.user);
+      localStorage.removeItem(browserStorage.isLoggedIn);
     },
     toggleAuthModal: (state, action) => {
       state.isAuthModalOpen = action.payload;
