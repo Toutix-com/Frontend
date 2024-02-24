@@ -31,13 +31,13 @@ const Navbar = () => {
 
   return (
     <div
-      className={` ${isNavbarTransparent ? 'absolute top-0 inset-x-0 bg-transparent  z-50 ' : 'relative bg-gray-200 shadow-md '}   w-full  px-4 py-4 md:px-10 md:py-5`}
+      className={` ${isNavbarTransparent ? 'absolute top-0 inset-x-0 bg-transparent  z-50 text-white ' : 'relative bg-gray-200 shadow-md '}   w-full px-4 py-4 md:px-10 md:py-5`}
     >
       <div className="flex justify-between w-full max-w-7xl mx-auto">
         <div className="flex items-center justify-between">
           <Link to={routes.home}>
             <img
-              className="object-contain h-10 drop-shadow-md "
+              className={`object-contain h-10 drop-shadow-md ${!isNavbarTransparent && 'invert'} `}
               src={NavLogo}
               alt=""
             />
@@ -51,7 +51,7 @@ const Navbar = () => {
               <TERipple>
                 <Link
                   to={routes.marketplace}
-                  className="block px-3 py-2 md:py-0"
+                  className={`block px-3 py-2 md:py-0 font-medium hover:font-semibold ${pathname === routes.marketplace ? 'underline' : 'hover:underline '} underline-offset-4`}
                 >
                   MarketPlace
                 </Link>
@@ -60,13 +60,18 @@ const Navbar = () => {
               <TERipple>
                 <Link
                   to={routes.createEvent}
-                  className="block px-3 py-2 md:py-0 "
+                  className={`block px-3 py-2 md:py-0 font-medium hover:font-semibold ${pathname === routes.createEvent ? 'underline' : 'hover:underline '} underline-offset-4`}
                 >
                   Create Event
                 </Link>
               </TERipple>
               <TERipple>
-                <Link className="block px-3 py-2 md:py-0">Contact</Link>
+                <Link
+                  to="#"
+                  className={`block px-3 py-2 md:py-0 font-medium hover:font-semibold ${pathname === routes.contact ? 'underline' : 'hover:underline '} underline-offset-4`}
+                >
+                  Contact
+                </Link>
               </TERipple>
               {!user && (
                 <TERipple>

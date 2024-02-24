@@ -9,5 +9,6 @@ export const routes = {
   userEvents: '/users/:userID/events',
   singleUserEvent: '/users/:userID/events/:eventID',
   ticketValidate: '/tickets/:ticketID/validate',
+  contact: '/contact',
   error: '*'
 };

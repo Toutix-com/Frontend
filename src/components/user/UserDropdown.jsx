@@ -27,7 +27,7 @@ const UserDropdown = () => {
         <TEDropdownToggle tag="a" className="cursor-pointer">
           <img
             src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
-            className="object-cover w-10 h-10 rounded-full"
+            className="object-cover w-10 h-10 rounded-full border-2 border-white border-opacity-50"
             alt="Avatar"
           />
         </TEDropdownToggle>
