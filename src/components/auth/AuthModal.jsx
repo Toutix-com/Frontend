@@ -11,7 +11,7 @@ const AuthModal = ({ showModal, setShowModal, enableClose }) => {
     <TEModal show={showModal} setShow={setShowModal} staticBackdrop>
       <TEModalDialog centered>
         <TEModalContent>
-          <div className="relative w-full p-8 mx-auto bg-gray-100 rounded-lg shadow-lg">
+          <div className="relative w-full p-8 mx-auto bg-gray-100 text-black rounded-lg shadow-lg">
             {enableClose && (
               <MdClose
                 className="absolute cursor-pointer top-4 right-4"
