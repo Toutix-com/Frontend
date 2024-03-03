@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import EventImage from '../../assets/toutix-home-bg.jpeg';
+import { activeCurrency } from '../../constants/currency';
 
 const SingleMarketplaceEvent = () => {
   const navigate = useNavigate();
@@ -22,7 +23,9 @@ const SingleMarketplaceEvent = () => {
           </div>
           <div className="flex items-center gap-2 p-4 text-center text-gray-200 bg-gray-800 bg-opacity-70 ">
             <p>Starting at</p>
-            <h1 className="text-sm font-semibold text-white">$30</h1>
+            <h1 className="text-sm font-semibold text-white">
+              {activeCurrency}30
+            </h1>
           </div>
         </div>
         <div className="flex items-center justify-between p-4 text-xs text-white">

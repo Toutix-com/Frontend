@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import CheckoutModal from '../checkout/CheckoutModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleAuthModal } from '../../store/auth/authSlice';
+import { activeCurrency } from '../../constants/currency';
 
 const TicketSelect = ({ ticket, event }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -48,7 +49,8 @@ const TicketSelect = ({ ticket, event }) => {
         </div>
 
         <div className="p-2 px-4 ml-auto border border-blue-500 bg-blue-50 max-w-max">
-          {price}$
+          {price}
+          {activeCurrency}
         </div>
       </div>
       <div className="flex flex-col gap-2">

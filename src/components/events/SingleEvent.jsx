@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router';
+import { activeCurrency } from '../../constants/currency';
 
 const SingleEvent = ({ event }) => {
   const {
@@ -43,7 +44,8 @@ const SingleEvent = ({ event }) => {
           <div className="flex items-center gap-2 p-4 text-center text-gray-200 bg-gray-800 bg-opacity-70 ">
             <p>Starting at</p>
             <h1 className="text-sm font-semibold text-white">
-              ${cheapest_ticket_price ?? 0}
+              {activeCurrency}
+              {cheapest_ticket_price ?? 0}
             </h1>
           </div>
         </div>

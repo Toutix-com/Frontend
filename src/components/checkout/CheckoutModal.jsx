@@ -3,6 +3,7 @@ import { MdClose } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { TEModal, TEModalContent, TEModalDialog } from 'tw-elements-react';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
+import { activeCurrency } from '../../constants/currency';
 
 const CheckoutModal = ({
   showModal,
@@ -69,29 +70,38 @@ const CheckoutModal = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="p-2 px-4 border border-blue-500 bg-blue-50">
-                    {ticket.price}$
+                    {ticket.price}
+                    {activeCurrency}
                   </div>
                   <p>x {numOfTicketSelected}</p>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col">
-              <div className="flex justify-between gap-4 py-2">
-                <p>Sub Total : </p>
-                <p>90.00$</p>
-              </div>
-              <div className="flex justify-between gap-4 py-2">
-                <p>Platform Fee : </p>
-                <p>9.00$</p>
-              </div>
-              <div className="flex justify-between gap-4 py-2 border-t-2 border-gray-200">
-                <p>Total : </p>
-                <p>99.00$</p>
-              </div>
+            <div className="flex flex-col w-full gap-2">
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                <>
+                  <div className="flex flex-col">
+                    <div className="flex justify-between gap-4 py-2">
+                      <p>Sub Total : </p>
+                      <p>90.00{activeCurrency}</p>
+                    </div>
+                    <div className="flex justify-between gap-4 py-2">
+                      <p>Platform Fee : </p>
+                      <p>9.00{activeCurrency}</p>
+                    </div>
+                    <div className="flex justify-between gap-4 py-2 border-t-2 border-gray-200">
+                      <p>Total : </p>
+                      <p>99.00{activeCurrency}</p>
+                    </div>
+                  </div>
+                  <button className="w-full p-3 px-6 text-sm font-medium text-center text-white bg-blue-500 rounded-md">
+                    Proceed to Payment
+                  </button>
+                </>
+              )}
             </div>
-            <button className="p-3 px-6 text-sm font-medium text-center text-white bg-blue-500 rounded-md">
-              Proceed to Payment
-            </button>
           </div>
         </TEModalContent>
       </TEModalDialog>
