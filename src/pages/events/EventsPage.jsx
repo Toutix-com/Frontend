@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SingleEvent from '../../components/events/SingleEvent';
+import { publicAxiosInstance } from '../../utils/axiosConfig';
 
 const EventsPage = () => {
+  const [events, setEvents] = useState([]); // Replace with your actual events data
+  const [isLoading, setIsLoading] = useState(true); // Replace with your actual loading state
+
+  const fetchEventsData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await publicAxiosInstance.get('/events');
+      console.log(response.data.events);
+      setEvents(response.data.events ?? []);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEventsData();
+  }, []);
+
   return (
     <div className="w-screen">
       <div className="h-[80vh] bg-cover bg-no-repeat bg-center bg-home-bg-banner relative">
@@ -18,11 +39,15 @@ const EventsPage = () => {
             <p className="text-gray-500">Don't miss on any events</p>
           </div>
           <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-            <SingleEvent />
-            <SingleEvent />
-            <SingleEvent />
-            <SingleEvent />
-            <SingleEvent />
+            {isLoading ? (
+              <div className="flex justify-center items-center col-span-3">
+                <p>Loading...</p>
+              </div>
+            ) : (
+              events.map((event) => (
+                <SingleEvent key={event.EventID} event={event} />
+              ))
+            )}
           </div>
         </div>
       </div>

@@ -1,9 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdClose } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { TEModal, TEModalContent, TEModalDialog } from 'tw-elements-react';
-import EventImage from '../../assets/toutix-home-bg.jpeg';
+import { privateAxiosInstance } from '../../utils/axiosConfig';
 
-const CheckoutModal = ({ showModal, setShowModal }) => {
+const CheckoutModal = ({
+  showModal,
+  setShowModal,
+  ticket,
+  numOfTicketSelected,
+  event
+}) => {
+  const [loading, setLoading] = useState(true);
+  const [checkoutDetails, setCheckoutDetails] = useState({});
+  const { user } = useSelector((state) => state.auth);
+  const { EventID, Name, image_url, location } = event;
+
+  const { Name: LocationName } = location;
+
+  const getCheckoutDetails = async () => {
+    try {
+      const { data } = await privateAxiosInstance.post(
+        `/events/${EventID}/ticket/validate`,
+        {
+          user_id: user.userID,
+          ticket_category_id: ticket.CategoryID,
+          number_of_tickets: numOfTicketSelected
+        }
+      );
+      console.log(data);
+      if (data) {
+        setCheckoutDetails(data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showModal) {
+      getCheckoutDetails();
+    }
+  }, [showModal]);
+
+  const handleProceedToPayment = () => {};
+
   return (
     <TEModal show={showModal} setShow={setShowModal} staticBackdrop>
       <TEModalDialog centered>
@@ -15,20 +58,20 @@ const CheckoutModal = ({ showModal, setShowModal }) => {
             />
             <div className="flex flex-col gap-3">
               <img
-                src={EventImage}
+                src={image_url}
                 alt=""
                 className="object-cover w-full h-40"
               />
               <div className="flex justify-between gap-4">
                 <div className="flex flex-col">
-                  <h3 className=""> Taylor Swift Concert</h3>
-                  <p className="text-sm text-gray-400">Madison Square Garden</p>
+                  <h3 className="">{Name || ''}</h3>
+                  <p className="text-sm text-gray-400">{LocationName}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="p-2 px-4 border border-blue-500 bg-blue-50">
-                    30$
+                    {ticket.price}$
                   </div>
-                  <p>x 3</p>
+                  <p>x {numOfTicketSelected}</p>
                 </div>
               </div>
             </div>

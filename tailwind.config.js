@@ -18,7 +18,7 @@ module.exports = {
       'gradient-to-l': 'linear-gradient(to left, var(--tw-gradient-stops))',
       'gradient-to-tl':
         'linear-gradient(to top left, var(--tw-gradient-stops))',
-      'home-bg-banner': 'url(./assets/toutix-home-bg.jpeg )',
+      'home-bg-banner': 'url(./assets/toutix-bg.webp )',
       'login-bg-banner': 'url(./assets/toutix-login-bg.jpeg)'
     }
   },

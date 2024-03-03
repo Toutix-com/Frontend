@@ -1,13 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
-import { setCredentials } from '../store/auth/authSlice';
-
-let store;
+import { browserStorage } from '../constants/storage';
+import { Cookies } from 'react-cookie';
 
 // Recommended approach to avoid circular import dependency error
-export const injectStore = (_store) => {
-  store = _store;
-};
 
 export const apiErrorResponse = (error) => {
   if (error.response) {
@@ -21,73 +17,46 @@ export const apiErrorResponse = (error) => {
   }
 };
 
-const instance = axios.create({
-  baseURL: 'http://localhost:3000',
-  withCredentials: true
+const publicAxiosInstance = axios.create({
+  baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api'
+});
+const privateAxiosInstance = axios.create({
+  baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api'
 });
 
-instance.interceptors.request.use(
+const cookies = new Cookies();
+
+// Request interceptor to add the access token from the cookie
+privateAxiosInstance.interceptors.request.use(
   (config) => {
-    const { accessToken } = store.getState().auth;
-
+    const accessToken = cookies.get(browserStorage.accessToken);
     if (accessToken) {
-      config.headers = {
-        Authorization: `Bearer ${accessToken}`,
-        Accept: 'application/json'
-      };
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
-
     return config;
   },
-  (err) => Promise.reject(err)
-);
-
-let calledOnce = false;
-
-instance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response !== null) {
-      if (error.response.status === 403 && !originalRequest._retry) {
-        if (!calledOnce) {
-          calledOnce = true;
-
-          try {
-            const refreshData = await instance.get('/refresh_token/verify');
-
-            if (refreshData) {
-              const { user } = store.getState().auth;
-              axios.defaults.headers.common.Authorization = `Bearer ${refreshData.data.access_token}`;
-
-              store.dispatch(
-                setCredentials({
-                  user,
-                  access_token: refreshData.data.access_token
-                })
-              );
-
-              return instance(originalRequest);
-            }
-          } catch (error) {
-            if (error.response && error.response.data) {
-              return Promise.reject(error.response.data);
-            }
-
-            return Promise.reject(error);
-          } finally {
-            originalRequest._retry = true;
-            calledOnce = false;
-          }
-        }
-      }
-    }
-
+  (error) => {
     return Promise.reject(error);
   }
 );
 
-export default instance;
+privateAxiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403)
+    ) {
+      // Handle 401 Unauthorized: Clear cookie and localStorage
+      // TODO: Redirect to login page
+      // cookies.remove(browserStorage.accessToken);
+      // localStorage.clear();
+      // window.location.reload();
+    }
+    return Promise.reject(error);
+  }
+);
+
+export { privateAxiosInstance, publicAxiosInstance };

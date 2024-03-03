@@ -1,21 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  loginUser,
-  logoutUser,
-  registerUser,
-  verifyUserDetails
-} from './authActions';
+import { browserStorage } from '../../constants/storage';
 
-const userAccessToken = localStorage.getItem('userAccessToken')
-  ? localStorage.getItem('userAccessToken')
-  : null;
+const storedUser =
+  JSON.parse(localStorage.getItem(browserStorage.user)) || null;
+const isLoggedIn = localStorage.getItem(browserStorage.isLoggedIn)
+  ? JSON.parse(localStorage.getItem(browserStorage.isLoggedIn))
+  : false;
 
 const initialState = {
-  loading: false,
-  user: null,
-  accessToken: userAccessToken,
-  error: null,
-  success: false
+  user: storedUser,
+  isLoggedIn: Boolean(isLoggedIn),
+  isAuthModalOpen: false
 };
 
 const authSlice = createSlice({
@@ -23,72 +18,23 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      state.user = action.payload.user;
-      state.accessToken = action.payload.access_token;
-
-      localStorage.setItem('userAccessToken', action.payload.access_token);
-    }
-  },
-  extraReducers: {
-    [registerUser.pending]: (state) => {
-      state.loading = true;
+      state.user = action.payload;
+      state.isLoggedIn = true;
+      localStorage.setItem(browserStorage.user, JSON.stringify(action.payload));
+      localStorage.setItem(browserStorage.isLoggedIn, JSON.stringify(true));
     },
-    [registerUser.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.user = action.payload.message;
-      state.error = null;
-      state.success = true;
-    },
-    [registerUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.error;
-    },
-
-    [loginUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [loginUser.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.user = action.payload.user;
-      state.accessToken = action.payload.access_token;
-      localStorage.setItem('userAccessToken', action.payload.access_token);
-      state.error = null;
-    },
-    [loginUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.error;
-    },
-
-    [logoutUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [logoutUser.fulfilled]: (state) => {
-      state.loading = false;
+    logout: (state) => {
       state.user = null;
-      state.accessToken = null;
-      localStorage.removeItem('userAccessToken');
-      state.success = true;
-      state.error = null;
+      state.isLoggedIn = false;
+      localStorage.removeItem(browserStorage.user);
+      localStorage.removeItem(browserStorage.isLoggedIn);
     },
-    [logoutUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.error;
-    },
-
-    [verifyUserDetails.pending]: (state) => {
-      state.loading = true;
-    },
-    [verifyUserDetails.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.user = action.payload.user_details;
-      state.error = null;
-    },
-    [verifyUserDetails.rejected]: (state) => {
-      state.loading = false;
+    toggleAuthModal: (state, action) => {
+      state.isAuthModalOpen = action.payload;
     }
   }
 });
 
 export default authSlice.reducer;
 
-export const { setCredentials } = authSlice.actions;
+export const { setCredentials, logout, toggleAuthModal } = authSlice.actions;

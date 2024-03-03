@@ -1,17 +1,77 @@
 import React, { useState } from 'react';
 import OTPInput from 'react-otp-input';
+import { browserStorage } from '../../constants/storage';
+import { publicAxiosInstance } from '../../utils/axiosConfig';
+import { useCookies } from 'react-cookie';
+import { showToastError, showToastSuccess } from '../../utils/toast';
+import { useDispatch } from 'react-redux';
+import { setCredentials, toggleAuthModal } from '../../store/auth/authSlice';
 
-const ForgetPassword = () => {
+const OTPComponent = ({ setTab }) => {
   const [otp, setOtp] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [cookies, setCookie, removeCookie] = useCookies([
+    browserStorage.loginEmail,
+    browserStorage.accessToken,
+    browserStorage.otpExpiry
+  ]);
+  const dispatch = useDispatch();
 
-  const handleResetPassword = () => {
-    //handle reset password logic
+  const validateOTP = (otp) => {
+    const regex = /^\d+$/;
+    return regex.test(otp);
+  };
+
+  const handleOTPValidation = async (e) => {
+    e.preventDefault();
+    if (!validateOTP(otp)) {
+      setError('Enter a Valid OTP');
+      return;
+    }
+    try {
+      const email = cookies[browserStorage.loginEmail];
+      if (!email) return;
+      setIsLoading(true);
+      const { data } = await publicAxiosInstance.post('/auth/validateOTP', {
+        email,
+        otp
+      });
+      console.log(data);
+      dispatch(
+        setCredentials({
+          email: data.email,
+          userID: data.user_id,
+          isFirstTimeLogin: data.first_time_login
+        })
+      );
+      setCookie(browserStorage.accessToken, data.access_token, {
+        path: '/',
+        maxAge: 3600 * 24 * 7
+      });
+      showToastSuccess(data.message);
+      setIsLoading(false);
+      removeCookie(browserStorage.loginEmail);
+      removeCookie(browserStorage.otpExpiry);
+      if (data.first_time_login === true) {
+        setTab('name');
+      } else {
+        dispatch(toggleAuthModal(false));
+      }
+    } catch (err) {
+      console.log(err.message);
+      if (err?.response?.status === 400 && err?.response?.data?.error) {
+        showToastError(err?.response?.data?.error);
+      }
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="flex flex-col gap-6 text-sm ">
+    <form
+      onSubmit={handleOTPValidation}
+      className="flex flex-col gap-6 text-sm "
+    >
       <p className="text-center text-gray-600">
         Enter OTP sent to abcd@email.com
       </p>
@@ -36,16 +96,17 @@ const ForgetPassword = () => {
             outline: 'none'
           }}
         />
+        {error && error.length > 0 && <p className="text-red-500">{error}</p>}
       </div>
 
       <button
-        onClick={handleResetPassword}
+        type="submit"
         className="w-full p-3 text-white bg-blue-500 rounded-md"
       >
-        Validate
+        {isLoading ? 'Validating...' : 'Validate'}
       </button>
-    </div>
+    </form>
   );
 };
 
-export default ForgetPassword;
+export default OTPComponent;

@@ -1,8 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { routes } from '../../constants/routes';
-import CreateEvent from '../../pages/create-event/CreateEvent';
 import ErrorPage from '../../pages/error/ErrorPage';
 import EventsPage from '../../pages/events/EventsPage';
+import LoginPage from '../../pages/login/LoginPage';
 import MarketPlaceEvent from '../../pages/marketplace-event/MarketPlaceEvent';
 import MarketplacePage from '../../pages/marketplace/MarketplacePage';
 import SingleEventPage from '../../pages/single-event/SingleEventPage';
@@ -13,11 +15,19 @@ import Validate from '../../pages/validate/Validate';
 import Navbar from '../navbar/Navbar';
 import PrivateRoute from '../privateRoute/PrivateRoute';
 import PublicRoute from '../publicRoute/PublicRoute';
-import LoginPage from '../../pages/login/LoginPage';
+import UserProfile from '../../pages/user-profile/UserProfile';
 
 function App() {
   return (
-    <div>
+    <div className="relative min-h-screen">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        newestOnTop={true}
+        hideProgressBar={true}
+        closeOnClick
+        rtl={false}
+      />
       <Navbar />
       <Routes>
         <Route
@@ -41,8 +51,8 @@ function App() {
           element={<PublicRoute component={MarketPlaceEvent} />}
         />
         <Route
-          path={routes.createEvent}
-          element={<PrivateRoute component={CreateEvent} />}
+          path={routes.userProfile}
+          element={<PrivateRoute component={UserProfile} />}
         />
         <Route
           path={routes.userTickets}
