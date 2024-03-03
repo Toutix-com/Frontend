@@ -1,0 +1,163 @@
+import React, { useEffect, useState } from 'react';
+import { privateAxiosInstance } from '../../utils/axiosConfig';
+import { showToastSuccess } from '../../utils/toast';
+
+const UserProfile = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [dob, setDob] = useState('');
+  const [address, setAddress] = useState('');
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const getUserProfile = async () => {
+    try {
+      const { data } = await privateAxiosInstance.get('/user/me');
+      if (data) {
+        setFirstName(data?.FirstName || '');
+        setLastName(data?.LastName || '');
+        // setDob(data?.dob);
+        setAddress(data?.Address || '');
+        setUser(data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getUserProfile();
+  }, []);
+
+  const handleUserProfileChange = async (e) => {
+    e.preventDefault();
+    setIsUpdating(true);
+    try {
+      const { data } = await privateAxiosInstance.put('/user/me/update', {
+        FirstName: firstName,
+        LastName: lastName,
+        Address: address,
+        PhoneNumber: phoneNumber
+        // DateOfBirth: dob
+      });
+      setIsUpdating(false);
+      showToastSuccess(data.message);
+      getUserProfile();
+    } catch (error) {
+      console.error('Error:', error);
+      setIsUpdating(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-200 sm:p-10 md:p-16">
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+          <form
+            onSubmit={handleUserProfileChange}
+            className="space-y-4 text-sm"
+          >
+            <div className="flex items-center gap-2">
+              <label className="text-sm text-gray-700">Email:</label>
+              <p className="text-sm">{user?.Email}</p>
+            </div>
+            <div>
+              <label className="text-sm text-gray-700">First Name:</label>
+              {isEditing ? (
+                <input
+                  className="w-full p-2 mt-2 text-sm border border-gray-300 rounded-md placeholder:text-gray-400 focus:outline-none focus:ring-transparent focus:border-blue-500"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="First Name"
+                />
+              ) : (
+                <p>{firstName}</p>
+              )}
+            </div>
+            <div>
+              <label className="text-sm text-gray-700">Last Name:</label>
+              {isEditing ? (
+                <input
+                  className="w-full p-2 mt-2 text-sm border border-gray-300 rounded-md placeholder:text-gray-400 focus:outline-none focus:ring-transparent focus:border-blue-500"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Last Name"
+                />
+              ) : (
+                <p>{lastName}</p>
+              )}
+            </div>
+            <div>
+              <label className="text-sm text-gray-700">Phone Number:</label>
+              {isEditing ? (
+                <input
+                  className="w-full p-2 mt-2 text-sm border border-gray-300 rounded-md placeholder:text-gray-400 focus:outline-none focus:ring-transparent focus:border-blue-500"
+                  type="text"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="Phone Number"
+                />
+              ) : (
+                <p>{phoneNumber}</p>
+              )}
+            </div>
+            <div>
+              <label className="text-sm text-gray-700">Date of Birth:</label>
+              {isEditing ? (
+                <input
+                  className="w-full p-2 mt-2 text-sm border border-gray-300 rounded-md placeholder:text-gray-400 focus:outline-none focus:ring-transparent focus:border-blue-500"
+                  type="date"
+                  value={dob}
+                  onChange={(e) => setDob(e.target.value)}
+                  placeholder="Date of Birth"
+                />
+              ) : (
+                <p>{dob}</p>
+              )}
+            </div>
+            <div>
+              <label className="text-sm text-gray-700">Address:</label>
+              {isEditing ? (
+                <textarea
+                  className="w-full h-20 p-2 mt-2 text-sm border border-gray-300 rounded-md placeholder:text-gray-400 focus:outline-none focus:ring-transparent focus:border-blue-500"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Address"
+                />
+              ) : (
+                <p>{address}</p>
+              )}
+            </div>
+
+            {isEditing && (
+              <button
+                type="submit"
+                className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+              >
+                {isUpdating ? 'Updating...' : 'Update'}
+              </button>
+            )}
+          </form>
+          {!isEditing && (
+            <button
+              type="button"
+              className="w-full px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default UserProfile;

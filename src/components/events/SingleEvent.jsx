@@ -3,8 +3,14 @@ import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
 const SingleEvent = ({ event }) => {
-  const { DateTime, EventID, Name, image_url, location, starting_price } =
-    event;
+  const {
+    DateTime,
+    EventID,
+    Name,
+    image_url,
+    location,
+    cheapest_ticket_price
+  } = event;
   const { Name: LocationName } = location;
   const navigate = useNavigate();
 
@@ -37,7 +43,7 @@ const SingleEvent = ({ event }) => {
           <div className="flex items-center gap-2 p-4 text-center text-gray-200 bg-gray-800 bg-opacity-70 ">
             <p>Starting at</p>
             <h1 className="text-sm font-semibold text-white">
-              ${starting_price ?? 0}
+              ${cheapest_ticket_price ?? 0}
             </h1>
           </div>
         </div>

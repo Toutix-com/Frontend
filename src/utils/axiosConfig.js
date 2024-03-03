@@ -1,12 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
-
-let store;
+import { browserStorage } from '../constants/storage';
+import { Cookies } from 'react-cookie';
 
 // Recommended approach to avoid circular import dependency error
-export const injectStore = (_store) => {
-  store = _store;
-};
 
 export const apiErrorResponse = (error) => {
   if (error.response) {
@@ -20,25 +17,46 @@ export const apiErrorResponse = (error) => {
   }
 };
 
-export const publicAxiosInstance = axios.create({
+const publicAxiosInstance = axios.create({
   baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api'
 });
-export const privateAxiosInstance = axios.create({
+const privateAxiosInstance = axios.create({
   baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api'
 });
 
+const cookies = new Cookies();
+
+// Request interceptor to add the access token from the cookie
 privateAxiosInstance.interceptors.request.use(
   (config) => {
-    const { accessToken } = store.getState().auth;
-
+    const accessToken = cookies.get(browserStorage.accessToken);
     if (accessToken) {
-      config.headers = {
-        Authorization: `Bearer ${accessToken}`,
-        Accept: 'application/json'
-      };
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
-
     return config;
   },
-  (err) => Promise.reject(err)
+  (error) => {
+    return Promise.reject(error);
+  }
 );
+
+privateAxiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403)
+    ) {
+      // Handle 401 Unauthorized: Clear cookie and localStorage
+      // TODO: Redirect to login page
+      // cookies.remove(browserStorage.accessToken);
+      // localStorage.clear();
+      // window.location.reload();
+    }
+    return Promise.reject(error);
+  }
+);
+
+export { privateAxiosInstance, publicAxiosInstance };

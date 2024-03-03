@@ -15,6 +15,7 @@ import Validate from '../../pages/validate/Validate';
 import Navbar from '../navbar/Navbar';
 import PrivateRoute from '../privateRoute/PrivateRoute';
 import PublicRoute from '../publicRoute/PublicRoute';
+import UserProfile from '../../pages/user-profile/UserProfile';
 
 function App() {
   return (
@@ -48,6 +49,10 @@ function App() {
         <Route
           path={routes.marketplaceEvent}
           element={<PublicRoute component={MarketPlaceEvent} />}
+        />
+        <Route
+          path={routes.userProfile}
+          element={<PrivateRoute component={UserProfile} />}
         />
         <Route
           path={routes.userTickets}

@@ -7,7 +7,7 @@ import { showToastError, showToastSuccess } from '../../utils/toast';
 import { useDispatch } from 'react-redux';
 import { setCredentials, toggleAuthModal } from '../../store/auth/authSlice';
 
-const ForgetPassword = () => {
+const OTPComponent = ({ setTab }) => {
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -53,7 +53,11 @@ const ForgetPassword = () => {
       setIsLoading(false);
       removeCookie(browserStorage.loginEmail);
       removeCookie(browserStorage.otpExpiry);
-      dispatch(toggleAuthModal(false));
+      if (data.first_time_login === true) {
+        setTab('name');
+      } else {
+        dispatch(toggleAuthModal(false));
+      }
     } catch (err) {
       console.log(err.message);
       if (err?.response?.status === 400 && err?.response?.data?.error) {
@@ -105,4 +109,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default OTPComponent;

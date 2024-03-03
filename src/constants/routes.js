@@ -7,6 +7,7 @@ export const routes = {
   createEvent: '/events/create',
   userTickets: '/users/:userID/tickets',
   userEvents: '/users/:userID/events',
+  userProfile: '/users/:userID/profile',
   singleUserEvent: '/users/:userID/events/:eventID',
   ticketValidate: '/tickets/:ticketID/validate',
   contact: '/contact',

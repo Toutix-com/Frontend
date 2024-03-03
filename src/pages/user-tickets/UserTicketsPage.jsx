@@ -10,7 +10,7 @@ const UserTicketsPage = () => {
             <h1 className="text-4xl font-medium tracking-normal">My Tickets</h1>
             <p className="text-gray-500">Check all your tickets here.</p>
           </div>
-          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          <div className="grid w-full grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3">
             <SingleTicket />
             <SingleTicket />
             <SingleTicket />

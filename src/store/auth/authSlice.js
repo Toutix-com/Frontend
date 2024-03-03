@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { browserStorage } from '../../constants/storage';
 
-const storedUser = localStorage.getItem(browserStorage.user)
-  ? localStorage.getItem(browserStorage.user)
-  : null;
+const storedUser =
+  JSON.parse(localStorage.getItem(browserStorage.user)) || null;
 const isLoggedIn = localStorage.getItem(browserStorage.isLoggedIn)
-  ? localStorage.getItem(browserStorage.isLoggedIn)
+  ? JSON.parse(localStorage.getItem(browserStorage.isLoggedIn))
   : false;
 
 const initialState = {
@@ -21,8 +20,8 @@ const authSlice = createSlice({
     setCredentials: (state, action) => {
       state.user = action.payload;
       state.isLoggedIn = true;
-      localStorage.setItem(browserStorage.user, action.payload);
-      localStorage.setItem(browserStorage.isLoggedIn, true);
+      localStorage.setItem(browserStorage.user, JSON.stringify(action.payload));
+      localStorage.setItem(browserStorage.isLoggedIn, JSON.stringify(true));
     },
     logout: (state) => {
       state.user = null;
