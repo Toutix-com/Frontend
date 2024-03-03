@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { MdShare } from 'react-icons/md';
 import {
   EmailIcon,
   EmailShareButton,
@@ -15,34 +16,58 @@ import {
   WhatsappIcon,
   WhatsappShareButton
 } from 'react-share';
+import {
+  TEModal,
+  TEModalContent,
+  TEModalDialog,
+  TERipple
+} from 'tw-elements-react';
 
-const ShareEvent = () => {
-  const getCurrentPageUrl = () => {
-    return window.location.href;
-  };
+const ShareEvent = ({ urlToShare }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="flex flex-col gap-3">
-      <FacebookShareButton url={getCurrentPageUrl()}>
-        <FacebookIcon size={32} round={true} />
-      </FacebookShareButton>
-      <FacebookMessengerShareButton url={getCurrentPageUrl()}>
-        <FacebookMessengerIcon size={32} round={true} />
-      </FacebookMessengerShareButton>
-      <WhatsappShareButton url={getCurrentPageUrl()}>
-        <WhatsappIcon size={32} round={true} />
-      </WhatsappShareButton>
-      <LinkedinShareButton url={getCurrentPageUrl()}>
-        <LinkedinIcon size={32} round={true} />
-      </LinkedinShareButton>
-      <EmailShareButton url={getCurrentPageUrl()}>
-        <EmailIcon size={32} round={true} />
-      </EmailShareButton>
-      <TwitterShareButton url={getCurrentPageUrl()}>
-        <TwitterIcon size={32} round={true} />
-      </TwitterShareButton>
-      <TelegramShareButton url={getCurrentPageUrl()}>
-        <TelegramIcon size={32} round={true} />
-      </TelegramShareButton>
+    <div>
+      <TERipple rippleColor="white">
+        <button
+          type="button"
+          className="flex items-center justify-center gap-2 p-3 py-2 text-white bg-blue-500 border-2 border-white border-opacity-50 focus:outline-none"
+          onClick={() => setIsOpen(true)}
+        >
+          <MdShare />
+          Share
+        </button>
+      </TERipple>
+
+      <TEModal show={isOpen} setShow={setIsOpen} scrollable>
+        <TEModalDialog centered>
+          <TEModalContent>
+            <div className="flex flex-wrap items-center justify-center w-full gap-3 p-4 mx-auto shadow bg-gray-50 md:p-10 lg:p-16 rounded-xl">
+              <FacebookShareButton url={urlToShare}>
+                <FacebookIcon size={32} round={true} />
+              </FacebookShareButton>
+              <FacebookMessengerShareButton url={urlToShare}>
+                <FacebookMessengerIcon size={32} round={true} />
+              </FacebookMessengerShareButton>
+              <WhatsappShareButton url={urlToShare}>
+                <WhatsappIcon size={32} round={true} />
+              </WhatsappShareButton>
+              <LinkedinShareButton url={urlToShare}>
+                <LinkedinIcon size={32} round={true} />
+              </LinkedinShareButton>
+              <EmailShareButton url={urlToShare}>
+                <EmailIcon size={32} round={true} />
+              </EmailShareButton>
+              <TwitterShareButton url={urlToShare}>
+                <TwitterIcon size={32} round={true} />
+              </TwitterShareButton>
+              <TelegramShareButton url={urlToShare}>
+                <TelegramIcon size={32} round={true} />
+              </TelegramShareButton>
+            </div>
+          </TEModalContent>
+        </TEModalDialog>
+      </TEModal>
     </div>
   );
 };

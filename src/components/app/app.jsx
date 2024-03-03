@@ -1,8 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { routes } from '../../constants/routes';
-import CreateEvent from '../../pages/create-event/CreateEvent';
 import ErrorPage from '../../pages/error/ErrorPage';
 import EventsPage from '../../pages/events/EventsPage';
+import LoginPage from '../../pages/login/LoginPage';
 import MarketPlaceEvent from '../../pages/marketplace-event/MarketPlaceEvent';
 import MarketplacePage from '../../pages/marketplace/MarketplacePage';
 import SingleEventPage from '../../pages/single-event/SingleEventPage';
@@ -13,9 +15,6 @@ import Validate from '../../pages/validate/Validate';
 import Navbar from '../navbar/Navbar';
 import PrivateRoute from '../privateRoute/PrivateRoute';
 import PublicRoute from '../publicRoute/PublicRoute';
-import LoginPage from '../../pages/login/LoginPage';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -49,10 +48,6 @@ function App() {
         <Route
           path={routes.marketplaceEvent}
           element={<PublicRoute component={MarketPlaceEvent} />}
-        />
-        <Route
-          path={routes.createEvent}
-          element={<PrivateRoute component={CreateEvent} />}
         />
         <Route
           path={routes.userTickets}

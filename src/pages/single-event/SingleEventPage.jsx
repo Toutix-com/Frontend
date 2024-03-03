@@ -38,7 +38,7 @@ const SingleEventPage = () => {
         <>
           <SingleEventDetails event={event} />
           <div className="w-full max-w-3xl mx-auto ">
-            <div className="flex scrollbar-hidden overflow-y-scroll flex-col h-[75vh] max-w-xl gap-6 mx-auto xl:ml-auto xl:mr-0 ">
+            <div className="flex flex-col max-w-xl gap-6 mx-auto xl:ml-auto xl:mr-0 ">
               <TicketSelect
                 price={30}
                 seatName={'Rear Seats'}

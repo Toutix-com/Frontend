@@ -1,10 +1,22 @@
 import { format } from 'date-fns';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import ShareEvent from './ShareEvent';
 
 const SingleEventDetails = ({ event }) => {
-  const { DateTime, Name, image_url, location, Description, EndTime } = event;
+  const {
+    DateTime,
+    Name,
+    image_url,
+    location,
+    Description,
+    EndTime,
+    EntryRequirement
+  } = event;
+  const [showFullText, setShowFullText] = useState(false);
 
+  const toggleShowFullText = () => {
+    setShowFullText(!showFullText);
+  };
   const eventStartDay = useMemo(
     () => format(new Date(DateTime), 'dd MMM,yyyy hh:mm a'),
     [DateTime]
@@ -17,9 +29,11 @@ const SingleEventDetails = ({ event }) => {
 
   return (
     <div className="flex flex-col w-full max-w-3xl gap-8 mx-auto">
-      <div className="relative flex gap-6 items-end">
+      <div className="relative">
         <img className="w-full h-[300px] object-cover" src={image_url} alt="" />
-        <ShareEvent />
+        <div className="absolute bottom-4 right-4">
+          <ShareEvent urlToShare={window.location.href} />
+        </div>
       </div>
       <div className="flex flex-col gap-1 text-gray-600 ">
         <h2 className="text-2xl font-medium text-gray-800">Event</h2>
@@ -28,8 +42,32 @@ const SingleEventDetails = ({ event }) => {
 
       <div className="flex flex-col gap-1 text-gray-600 ">
         <h2 className="text-2xl font-medium text-gray-800">Description</h2>
-        <p className="text-sm font-light">{Description}</p>
+        <p
+          className={`text-sm font-light ${!showFullText ? 'line-clamp-3' : ''}`}
+        >
+          {/* Render text with line breaks */}
+          {Description.split('\n').map((paragraph, index) => (
+            <React.Fragment key={index}>
+              {paragraph}
+              <br />
+            </React.Fragment>
+          ))}
+        </p>
+        <button
+          onClick={toggleShowFullText}
+          className="mr-auto text-sm text-blue-500 "
+        >
+          {showFullText ? 'See Less' : 'See More'}
+        </button>
       </div>
+      {EntryRequirement && (
+        <div className="flex flex-col gap-1 text-gray-600 ">
+          <h2 className="text-2xl font-medium text-gray-800">
+            Entry Requirement
+          </h2>
+          <p className="text-sm font-light">{EntryRequirement}</p>
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-8">
         <div className="flex flex-col gap-1 text-gray-600 ">
           <h2 className="text-2xl font-medium text-gray-800">Starts At</h2>

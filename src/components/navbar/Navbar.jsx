@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { RiMenu3Fill } from 'react-icons/ri';
-import NavLogo from '../../assets/toutix-logo-transparent.png';
-import { TERipple } from 'tw-elements-react';
-import AuthModal from '../auth/AuthModal';
-import { routes } from '../../constants/routes';
-import UserDropdown from '../user/UserDropdown';
 import { MdClose } from 'react-icons/md';
+import { RiMenu3Fill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { TERipple } from 'tw-elements-react';
+import NavLogo from '../../assets/toutix-logo-transparent.png';
+import { routes } from '../../constants/routes';
 import { toggleAuthModal } from '../../store/auth/authSlice';
+import AuthModal from '../auth/AuthModal';
+import UserDropdown from '../user/UserDropdown';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,12 +17,7 @@ const Navbar = () => {
   const { pathname } = useLocation();
 
   const isNavbarTransparent = useMemo(() => {
-    return [
-      routes.home,
-      routes.marketplace,
-      routes.createEvent,
-      routes.login
-    ].includes(pathname);
+    return [routes.home, routes.marketplace, routes.login].includes(pathname);
   }, [pathname]);
 
   const toggleNavbar = () => {
@@ -59,10 +54,10 @@ const Navbar = () => {
 
               <TERipple>
                 <Link
-                  to={routes.createEvent}
-                  className={`block px-3 py-2 md:py-0 font-medium hover:font-semibold ${pathname === routes.createEvent ? 'underline' : 'hover:underline '} underline-offset-4`}
+                  to="#"
+                  className={`block px-3 py-2 md:py-0 font-medium hover:font-semibold ${pathname === routes.aboutUs ? 'underline' : 'hover:underline '} underline-offset-4`}
                 >
-                  Create Event
+                  About Us
                 </Link>
               </TERipple>
               <TERipple>
