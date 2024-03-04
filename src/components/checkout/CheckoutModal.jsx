@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { TEModal, TEModalContent, TEModalDialog } from 'tw-elements-react';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { activeCurrency } from '../../constants/currency';
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutModal = ({
   showModal,
@@ -16,8 +17,8 @@ const CheckoutModal = ({
   const [checkoutDetails, setCheckoutDetails] = useState({});
   const { user } = useSelector((state) => state.auth);
   const { EventID, Name, image_url, location } = event;
-
   const { Name: LocationName } = location;
+  const navigate = useNavigate();
 
   const getCheckoutDetails = async () => {
     try {
@@ -29,7 +30,7 @@ const CheckoutModal = ({
           number_of_tickets: numOfTicketSelected
         }
       );
-      console.log(data);
+
       if (data) {
         setCheckoutDetails(data);
         setLoading(false);
@@ -46,7 +47,18 @@ const CheckoutModal = ({
     }
   }, [showModal]);
 
-  const handleProceedToPayment = () => {};
+  const handleProceedToPayment = () => {
+    if (checkoutDetails.is_eligible_to_purchase) {
+      navigate(`/events/${EventID}/checkout`, {
+        state: {
+          ticket,
+          numOfTicketSelected,
+          event,
+          checkoutDetails
+        }
+      });
+    }
+  };
 
   return (
     <TEModal show={showModal} setShow={setShowModal} staticBackdrop>
@@ -82,21 +94,45 @@ const CheckoutModal = ({
                 <p>Loading...</p>
               ) : (
                 <>
-                  <div className="flex flex-col">
-                    <div className="flex justify-between gap-4 py-2">
-                      <p>Sub Total : </p>
-                      <p>90.00{activeCurrency}</p>
+                  {checkoutDetails.is_eligible_to_purchase ? (
+                    <div className="flex flex-col">
+                      <div className="flex justify-between gap-4 py-2">
+                        <p>Sub Total : </p>
+                        <p>
+                          {checkoutDetails?.total?.toFixed(2)}
+                          {activeCurrency}
+                        </p>
+                      </div>
+                      <div className="flex justify-between gap-4 py-2">
+                        <p>Platform Fee : </p>
+                        <p>
+                          {checkoutDetails?.service?.toFixed(2)}
+                          {activeCurrency}
+                        </p>
+                      </div>
+                      <div className="flex justify-between gap-4 py-2 border-t-2 border-gray-200">
+                        <p>Total : </p>
+                        <p>
+                          {(
+                            checkoutDetails?.total + checkoutDetails?.service
+                          ).toFixed(2)}
+                          {activeCurrency}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex justify-between gap-4 py-2">
-                      <p>Platform Fee : </p>
-                      <p>9.00{activeCurrency}</p>
+                  ) : (
+                    <div>
+                      <p className="text-sm text-center text-red-500 ">
+                        Sorry, you are not eligible to purchase this ticket
+                      </p>
                     </div>
-                    <div className="flex justify-between gap-4 py-2 border-t-2 border-gray-200">
-                      <p>Total : </p>
-                      <p>99.00{activeCurrency}</p>
-                    </div>
-                  </div>
-                  <button className="w-full p-3 px-6 text-sm font-medium text-center text-white bg-blue-500 rounded-md">
+                  )}
+
+                  <button
+                    disabled={!checkoutDetails?.is_eligible_to_purchase}
+                    onClick={handleProceedToPayment}
+                    className="w-full p-3 px-6 text-sm font-medium text-center text-white bg-blue-500 rounded-md disabled:cursor-not-allowed disabled:bg-gray-300"
+                  >
                     Proceed to Payment
                   </button>
                 </>

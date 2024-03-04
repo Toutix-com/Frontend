@@ -60,7 +60,7 @@ const Name = () => {
       <button
         type={'submit'}
         disabled={firstName.length === 0}
-        className="w-full p-3 text-white bg-blue-500 rounded-md"
+        className="w-full p-3 text-white bg-blue-500 rounded-md disabled:cursor-not-allowed disabled:bg-blue-400"
       >
         {isLoading ? 'Updating info...' : 'Update info'}
       </button>
