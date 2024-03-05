@@ -14,5 +14,6 @@ export const routes = {
   ticketValidate: '/tickets/:ticketID/validate',
   contact: '/contact',
   aboutUs: '/about-us',
+  paymentSuccess: '/success',
   error: '*'
 };
