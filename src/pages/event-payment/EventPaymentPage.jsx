@@ -8,6 +8,7 @@ import {
   useStripe,
   useElements
 } from '@stripe/react-stripe-js';
+import { showToastError } from '../../utils/toast';
 
 const EventPaymentPage = () => {
   const location = useLocation();
@@ -23,17 +24,25 @@ const EventPaymentPage = () => {
       const { data } = await privateAxiosInstance.post(
         `/payment/intent/events/ticket`,
         {
-          user_id: user.userID,
-          ticket_category_id: ticket.CategoryID,
-          number_of_tickets: numOfTicketSelected,
-          event_id: event.EventID
+          userID: user.userID,
+          ticketCategoryID: ticket.CategoryID,
+          numberOfTickets: numOfTicketSelected,
+          eventID: event.EventID
         }
       );
+
       if (data) {
         console.log(data);
       }
     } catch (error) {
       console.error('Error:', error);
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data
+      ) {
+        showToastError(error.response.data.error);
+      }
       //   navigate(`/events/${event.EventID}`);
       setLoading(false);
     }
@@ -63,6 +72,13 @@ const EventPaymentPage = () => {
       }
     } catch (error) {
       console.error('Error:', error);
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data
+      ) {
+        showToastError(error.response.data.error);
+      }
       setLoading(false);
     }
   };

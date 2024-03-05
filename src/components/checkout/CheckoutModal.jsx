@@ -5,6 +5,7 @@ import { TEModal, TEModalContent, TEModalDialog } from 'tw-elements-react';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { activeCurrency } from '../../constants/currency';
 import { useNavigate } from 'react-router-dom';
+import { showToastError } from '../../utils/toast';
 
 const CheckoutModal = ({
   showModal,
@@ -37,6 +38,13 @@ const CheckoutModal = ({
       }
     } catch (error) {
       console.error('Error:', error);
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data
+      ) {
+        showToastError(error.response.data.error);
+      }
       setLoading(false);
     }
   };
