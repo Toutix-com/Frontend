@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { showToastSuccess } from '../../utils/toast';
+import { format } from 'date-fns';
 
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -19,7 +20,7 @@ const UserProfile = () => {
       if (data) {
         setFirstName(data?.FirstName || '');
         setLastName(data?.LastName || '');
-        // setDob(data?.dob);
+        setDob(data?.Birthday || '');
         setAddress(data?.Address || '');
         setUser(data);
         setLoading(false);
@@ -42,12 +43,13 @@ const UserProfile = () => {
         FirstName: firstName,
         LastName: lastName,
         Address: address,
-        PhoneNumber: phoneNumber
-        // DateOfBirth: dob
+        PhoneNumber: phoneNumber,
+        Birthday: dob
       });
       setIsUpdating(false);
       showToastSuccess(data.message);
       getUserProfile();
+      setIsEditing(false);
     } catch (error) {
       console.error('Error:', error);
       setIsUpdating(false);
@@ -119,7 +121,7 @@ const UserProfile = () => {
                   placeholder="Date of Birth"
                 />
               ) : (
-                <p>{dob}</p>
+                <p>{format(new Date(dob), 'do MMM yyyy')}</p>
               )}
             </div>
             <div>
