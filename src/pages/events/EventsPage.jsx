@@ -10,7 +10,6 @@ const EventsPage = () => {
     setIsLoading(true);
     try {
       const response = await publicAxiosInstance.get('/events');
-      console.log(response.data.events);
       setEvents(response.data.events ?? []);
       setIsLoading(false);
     } catch (err) {
@@ -40,7 +39,7 @@ const EventsPage = () => {
           </div>
           <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             {isLoading ? (
-              <div className="flex justify-center items-center col-span-3">
+              <div className="flex items-center justify-center col-span-3">
                 <p>Loading...</p>
               </div>
             ) : (
