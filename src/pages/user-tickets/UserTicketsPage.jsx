@@ -33,9 +33,13 @@ const UserTicketsPage = () => {
           {isLoading ? (
             <p>Loading...</p>
           ) : (
-            <div className="grid w-full grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3">
+            <div className="grid w-full grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {tickets.map((ticket) => (
-                <SingleTicket key={ticket.TicketID} ticket={ticket} />
+                <SingleTicket
+                  key={ticket.TicketID}
+                  ticket={ticket}
+                  refetch={fetchTickets}
+                />
               ))}
             </div>
           )}

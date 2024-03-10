@@ -14,7 +14,13 @@ import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { showToastSuccess } from '../../utils/toast';
 import { set } from 'date-fns';
 
-const MarketplacePopup = ({ setShowModal, showModal, event, ticket }) => {
+const MarketplacePopup = ({
+  setShowModal,
+  showModal,
+  event,
+  ticket,
+  refetch = () => {}
+}) => {
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const { EventID, DateTime, Name, image_url, location } = event;
@@ -43,6 +49,8 @@ const MarketplacePopup = ({ setShowModal, showModal, event, ticket }) => {
         showToastSuccess(data.message);
       }
       setLoading(false);
+      refetch();
+      setShowModal(false);
     } catch (error) {
       console.error('Error:', error);
       if (

@@ -10,7 +10,7 @@ import { getTicketPrice, getTotalPrice } from '../../utils/common';
 import { showToastSuccess } from '../../utils/toast';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
 
-const SingleTicket = ({ ticket, isValidating = false }) => {
+const SingleTicket = ({ ticket, isValidating = false, refetch = () => {} }) => {
   const { Category, Event, TicketID, Status, SeatNumber, Price, InitialPrice } =
     ticket;
   const { DateTime, Name, image_url, location } = Event;
@@ -55,6 +55,8 @@ const SingleTicket = ({ ticket, isValidating = false }) => {
         showToastSuccess(data.message);
       }
       setLoading(false);
+      setShowConfirmDelistPopup(false);
+      refetch();
     } catch (error) {
       console.error('Error:', error);
       if (
@@ -69,8 +71,8 @@ const SingleTicket = ({ ticket, isValidating = false }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-[360px] ">
-      <div className="flex flex-col w-full gap-3 bg-white rounded-lg shadow ">
+    <div className="flex flex-col items-center justify-center w-full ">
+      <div className="flex flex-col w-full max-w-[340px] gap-3 bg-white rounded-lg shadow ">
         <div
           ref={componentRef}
           className="flex flex-col w-full gap-3 p-5 bg-white rounded-t-lg"
@@ -175,6 +177,7 @@ const SingleTicket = ({ ticket, isValidating = false }) => {
         setShowModal={setShowMarketplacePopup}
         event={Event}
         ticket={ticket}
+        refetch={refetch}
       />
     </div>
   );
