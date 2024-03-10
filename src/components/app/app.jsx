@@ -18,6 +18,7 @@ import Navbar from '../navbar/Navbar';
 import PrivateRoute from '../privateRoute/PrivateRoute';
 import PublicRoute from '../publicRoute/PublicRoute';
 import Success from '../../pages/success/Success';
+import MarketplacePayment from '../../pages/marketplace-payment/MarketplacePayment';
 
 function App() {
   return (
@@ -55,6 +56,10 @@ function App() {
         <Route
           path={routes.eventPayment}
           element={<PrivateRoute component={EventPaymentPage} />}
+        />
+        <Route
+          path={routes.marketplacePayment}
+          element={<PrivateRoute component={MarketplacePayment} />}
         />
         <Route
           path={routes.userProfile}

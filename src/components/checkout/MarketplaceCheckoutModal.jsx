@@ -23,11 +23,10 @@ const MarketplaceCheckoutModal = ({
   const getCheckoutDetails = async () => {
     try {
       const { data } = await privateAxiosInstance.post(
-        `/events/${EventID}/ticket/validate`,
+        `/market/${EventID}/validate`,
         {
           user_id: user.userID,
-          ticket_category_id: ticket.CategoryID,
-          number_of_tickets: 1
+          ticket_id: ticket.TicketID
         }
       );
 
@@ -56,10 +55,9 @@ const MarketplaceCheckoutModal = ({
 
   const handleProceedToPayment = () => {
     if (checkoutDetails.is_eligible_to_purchase) {
-      navigate(`/events/${EventID}/checkout`, {
+      navigate(`/marketplace/events/${EventID}/checkout`, {
         state: {
           ticket,
-          numOfTicketSelected: 1,
           event,
           checkoutDetails
         }

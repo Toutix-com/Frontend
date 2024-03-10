@@ -1,5 +1,4 @@
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -7,30 +6,27 @@ import PaymentForm from '../../components/checkout/PaymentForm';
 import { activeCurrency } from '../../constants/currency';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { showToastError } from '../../utils/toast';
+import { stripePromise } from '../event-payment/EventPaymentPage';
 
-export const stripePromise = loadStripe(
-  'pk_test_51OjNO1L6oeMlaoGU6CjNs3HlOgqKEXnwOmJXQnfraRe5PDL7q3Q7AkrFVezntaCZ8h2NYibYtjjEwEK7BFoVnWkv001eJdfSBQ'
-);
-
-const EventPaymentPage = () => {
+const MarketplacePayment = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [checkoutDetails, setCheckoutDetails] = useState({});
   const [paymentDetails, setPaymentDetails] = useState(null);
-  console.log(location.state);
 
   const createPaymentIntent = async () => {
-    const { ticket, numOfTicketSelected, event } = location.state;
+    const { ticket, resalePrice, event } = location.state;
     try {
       const { data } = await privateAxiosInstance.post(
-        `/payment/intent/events/ticket`,
+        `/payment/intent/marketplace/ticket`,
         {
           user_id: user.userID,
           ticket_category_id: ticket.CategoryID,
-          number_of_tickets: numOfTicketSelected,
-          event_id: event.EventID
+          ticket_id: ticket.TicketID,
+          event_id: event.EventID,
+          resale_price: ticket.Price ?? 0
         }
       );
 
@@ -53,14 +49,13 @@ const EventPaymentPage = () => {
   };
 
   const getCheckoutDetails = async () => {
-    const { ticket, numOfTicketSelected, event } = location.state;
+    const { ticket, event } = location.state;
     try {
       const { data } = await privateAxiosInstance.post(
-        `/events/${event.EventID}/ticket/validate`,
+        `/market/${event.EventID}/validate`,
         {
           user_id: user.userID,
-          ticket_category_id: ticket.CategoryID,
-          number_of_tickets: numOfTicketSelected
+          ticket_id: ticket.TicketID
         }
       );
 
@@ -69,7 +64,7 @@ const EventPaymentPage = () => {
         if (data.is_eligible_to_purchase) {
           createPaymentIntent();
         } else {
-          navigate(`/events/${event.EventID}`);
+          navigate(`/marketplace/events/${event.EventID}`);
         }
 
         setLoading(false);
@@ -99,6 +94,7 @@ const EventPaymentPage = () => {
     clientSecret: paymentDetails?.clientSecret,
     appearance
   };
+
   return (
     <div className="min-h-screen p-4 bg-gray-100 sm:p-10 md:p-16">
       <div className="flex w-full gap-16 mx-auto max-w-7xl">
@@ -121,7 +117,6 @@ const EventPaymentPage = () => {
                   {location.state.ticket.price}
                   {activeCurrency}
                 </div>
-                <p>x {location.state.numOfTicketSelected}</p>
               </div>
             </div>
           </div>
@@ -168,4 +163,4 @@ const EventPaymentPage = () => {
   );
 };
 
-export default EventPaymentPage;
+export default MarketplacePayment;
