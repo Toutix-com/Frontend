@@ -48,11 +48,11 @@ const SingleTicket = ({ ticket, isValidating = false, refetch = () => {} }) => {
   const handleDelistFromMarketplace = async () => {
     setLoading(true);
     try {
-      const { data } = privateAxiosInstance.put(
+      const { data } = await privateAxiosInstance.put(
         `/user/me/tickets/${ticket.TicketID}/delist`
       );
       if (data) {
-        showToastSuccess(data.message);
+        showToastSuccess('Ticket de-listed successfully');
       }
       setLoading(false);
       setShowConfirmDelistPopup(false);

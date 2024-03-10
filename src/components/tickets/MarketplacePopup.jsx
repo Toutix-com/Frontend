@@ -42,11 +42,14 @@ const MarketplacePopup = ({
   const handleListOnMarketplace = async () => {
     setLoading(true);
     try {
-      const { data } = privateAxiosInstance.put(
-        `/user/me/tickets/${ticket.TicketID}/list_on_marketplace`
+      const { data } = await privateAxiosInstance.put(
+        `/user/me/tickets/${ticket.TicketID}/list_on_marketplace`,
+        {
+          price: marketplacePrice
+        }
       );
       if (data) {
-        showToastSuccess(data.message);
+        showToastSuccess('Ticket listed on marketplace successfully');
       }
       setLoading(false);
       refetch();
