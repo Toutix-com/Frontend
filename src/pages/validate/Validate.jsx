@@ -10,6 +10,7 @@ const Validate = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isTicketLoading, setIsTicketLoading] = useState(true);
   const [ticket, setTicket] = useState({});
+  const [bgColor, setBgColor] = useState('bg-blue-500');
 
   const { ticketID } = useParams();
 
@@ -18,7 +19,7 @@ const Validate = () => {
     setIsTicketLoading(true);
     try {
       // Make API call to validate ticket
-      const { data } = await privateAxiosInstance.post(`/tickets/${ticketID}`);
+      const { data } = await privateAxiosInstance.get(`/ticket/${ticketID}`);
       console.log(data);
       if (data) {
         setTicket(data);
@@ -42,10 +43,18 @@ const Validate = () => {
     setIsLoading(true);
     try {
       // Make API call to validate ticket
-      const response = await privateAxiosInstance.post(
-        `/tickets/${ticketID}/validate`
+      const { data } = await privateAxiosInstance.post(
+        `/ticket/${ticketID}/validate`
       );
-      setIsSuccess(true);
+      if (data) {
+        if (data.valid) {
+          setIsSuccess(data.valid);
+          setBgColor('bg-green-500');
+        } else {
+          setErrorMessage('Ticket is not valid');
+          setBgColor('bg-red-500');
+        }
+      }
     } catch (error) {
       setErrorMessage('An error occurred while validating the ticket.');
     }
@@ -62,12 +71,12 @@ const Validate = () => {
         <p>Loading...</p>
       ) : (
         <div className="flex flex-col items-center w-full max-w-xl gap-4 p-6">
-          <SingleTicket />
+          <SingleTicket ticket={ticket} isValidating />
 
           <button
             onClick={handleValidateTicket}
             disabled={isLoading}
-            className="p-3 px-6 mx-auto font-semibold text-white bg-blue-500 rounded-md"
+            className={`p-3 px-6 mx-auto font-semibold text-white ${bgColor} rounded-md`}
           >
             {isLoading ? 'Validating...' : 'Validate Ticket'}
           </button>

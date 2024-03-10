@@ -14,6 +14,7 @@ const UserTicketsPage = () => {
       setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -22,8 +23,8 @@ const UserTicketsPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <div className="px-4 py-20 bg-gray-300 sm:px-10 md:px-24">
+    <div className="min-h-screen bg-gray-200">
+      <div className="px-4 py-20 sm:px-10 md:px-24">
         <div className="flex flex-col gap-10 mx-auto max-w-7xl">
           <div className="flex flex-col">
             <h1 className="text-4xl font-medium tracking-normal">My Tickets</h1>
@@ -34,7 +35,7 @@ const UserTicketsPage = () => {
           ) : (
             <div className="grid w-full grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3">
               {tickets.map((ticket) => (
-                <SingleTicket key={ticket.TicketID} />
+                <SingleTicket key={ticket.TicketID} ticket={ticket} />
               ))}
             </div>
           )}

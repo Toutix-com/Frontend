@@ -78,7 +78,7 @@ function App() {
         />
         <Route
           path={routes.ticketValidate}
-          element={<PublicRoute component={Validate} />}
+          element={<PrivateRoute component={Validate} />}
         />
         <Route
           path={routes.error}
