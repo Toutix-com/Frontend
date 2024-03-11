@@ -7,11 +7,10 @@ import { activeCurrency } from '../../constants/currency';
 import { useNavigate } from 'react-router-dom';
 import { showToastError } from '../../utils/toast';
 
-const CheckoutModal = ({
+const MarketplaceCheckoutModal = ({
   showModal,
   setShowModal,
   ticket,
-  numOfTicketSelected,
   event
 }) => {
   const [loading, setLoading] = useState(true);
@@ -24,11 +23,10 @@ const CheckoutModal = ({
   const getCheckoutDetails = async () => {
     try {
       const { data } = await privateAxiosInstance.post(
-        `/events/${EventID}/ticket/validate`,
+        `/market/${EventID}/validate`,
         {
           user_id: user.userID,
-          ticket_category_id: ticket.CategoryID,
-          number_of_tickets: numOfTicketSelected
+          ticket_id: ticket.TicketID
         }
       );
 
@@ -57,10 +55,9 @@ const CheckoutModal = ({
 
   const handleProceedToPayment = () => {
     if (checkoutDetails.is_eligible_to_purchase) {
-      navigate(`/events/${EventID}/checkout`, {
+      navigate(`/marketplace/events/${EventID}/checkout`, {
         state: {
           ticket,
-          numOfTicketSelected,
           event,
           checkoutDetails
         }
@@ -93,7 +90,6 @@ const CheckoutModal = ({
                     {ticket.price}
                     {activeCurrency}
                   </div>
-                  <p>x {numOfTicketSelected}</p>
                 </div>
               </div>
             </div>
@@ -102,7 +98,7 @@ const CheckoutModal = ({
                 <p>Loading...</p>
               ) : (
                 <>
-                  {checkoutDetails?.is_eligible_to_purchase === true ? (
+                  {checkoutDetails.is_eligible_to_purchase ? (
                     <div className="flex flex-col">
                       <div className="flex justify-between gap-4 py-2">
                         <p>Sub Total : </p>
@@ -153,4 +149,4 @@ const CheckoutModal = ({
   );
 };
 
-export default CheckoutModal;
+export default MarketplaceCheckoutModal;

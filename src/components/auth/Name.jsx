@@ -34,7 +34,7 @@ const Name = () => {
   return (
     <form onSubmit={handleNameUpdate} className="flex flex-col gap-6 text-sm ">
       <label className="flex flex-col gap-1">
-        <p className="pl-2">Email*</p>
+        <p className="pl-2">First Name*</p>
 
         <input
           type="text"
@@ -45,7 +45,7 @@ const Name = () => {
         />
       </label>
       <label className="flex flex-col gap-1">
-        <p className="pl-2">Email*</p>
+        <p className="pl-2">Last Name*</p>
 
         <input
           type="text"
@@ -60,7 +60,7 @@ const Name = () => {
       <button
         type={'submit'}
         disabled={firstName.length === 0}
-        className="w-full p-3 text-white bg-blue-500 rounded-md"
+        className="w-full p-3 text-white bg-blue-500 rounded-md disabled:cursor-not-allowed disabled:bg-blue-400"
       >
         {isLoading ? 'Updating info...' : 'Update info'}
       </button>

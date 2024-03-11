@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { browserStorage } from '../constants/storage';
 import { Cookies } from 'react-cookie';
+import { showToastError } from './toast';
 
 // Recommended approach to avoid circular import dependency error
 
@@ -45,15 +46,13 @@ privateAxiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (
-      error.response &&
-      (error.response.status === 401 || error.response.status === 403)
-    ) {
+    if (error.response && error.response.status === 401) {
       // Handle 401 Unauthorized: Clear cookie and localStorage
       // TODO: Redirect to login page
-      // cookies.remove(browserStorage.accessToken);
-      // localStorage.clear();
-      // window.location.reload();
+      cookies.remove(browserStorage.accessToken);
+      showToastError('Session expired. Please login again');
+      localStorage.clear();
+      window.location.reload();
     }
     return Promise.reject(error);
   }

@@ -7,10 +7,13 @@ export const routes = {
   createEvent: '/events/create',
   userTickets: '/users/:userID/tickets',
   userEvents: '/users/:userID/events',
+  eventPayment: '/events/:eventID/checkout',
+  marketplacePayment: '/marketplace/events/:eventID/checkout',
   userProfile: '/users/:userID/profile',
   singleUserEvent: '/users/:userID/events/:eventID',
   ticketValidate: '/tickets/:ticketID/validate',
   contact: '/contact',
   aboutUs: '/about-us',
+  paymentSuccess: '/success',
   error: '*'
 };
