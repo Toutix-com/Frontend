@@ -29,7 +29,7 @@ const UserDropdown = () => {
       <TERipple rippleColor="light">
         <TEDropdownToggle tag="a" className="cursor-pointer">
           <img
-            src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+            src="https://www.ateamsoftsolutions.com/wp-content/uploads/2020/09/user-dummy.jpg"
             className="object-cover w-10 h-10 border-2 border-white border-opacity-50 rounded-full"
             alt="Avatar"
           />
@@ -53,7 +53,7 @@ const UserDropdown = () => {
             My Tickets
           </Link>
         </TEDropdownItem>
-
+        {/* 
         <TEDropdownItem>
           <Link
             to={`/users/${userID}/events`}
@@ -61,7 +61,7 @@ const UserDropdown = () => {
           >
             My Events
           </Link>
-        </TEDropdownItem>
+        </TEDropdownItem> */}
         <TEDropdownItem>
           <button
             onClick={handleLogout}

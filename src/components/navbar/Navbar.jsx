@@ -74,7 +74,7 @@ const Navbar = () => {
                     onClick={() => dispatch(toggleAuthModal(true))}
                     className="p-2 px-4 mt-4 font-medium text-white bg-blue-500 rounded-md md:ml-6 md:mt-0"
                   >
-                    Login
+                    Login/signup
                   </button>
                 </TERipple>
               )}

@@ -17,6 +17,7 @@ const SingleEventDetails = ({ event }) => {
   const toggleShowFullText = () => {
     setShowFullText(!showFullText);
   };
+
   const eventStartDay = useMemo(
     () => format(new Date(DateTime), 'dd MMM,yyyy hh:mm a'),
     [DateTime]
