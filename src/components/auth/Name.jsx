@@ -34,7 +34,7 @@ const Name = () => {
   return (
     <form onSubmit={handleNameUpdate} className="flex flex-col gap-6 text-sm ">
       <label className="flex flex-col gap-1">
-        <p className="pl-2">First Name*</p>
+        <p className="pl-2">First Name</p>
 
         <input
           type="text"
@@ -45,7 +45,7 @@ const Name = () => {
         />
       </label>
       <label className="flex flex-col gap-1">
-        <p className="pl-2">Last Name*</p>
+        <p className="pl-2">Last Name</p>
 
         <input
           type="text"

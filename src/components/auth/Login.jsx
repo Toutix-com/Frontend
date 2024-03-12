@@ -60,7 +60,7 @@ const Login = ({ setTab }) => {
   return (
     <form onSubmit={handleSignIn} className="flex flex-col gap-6 text-sm ">
       <label className="flex flex-col gap-1">
-        <p className="pl-2">Email*</p>
+        <p className="pl-2">Email</p>
 
         <input
           type="email"
@@ -71,6 +71,11 @@ const Login = ({ setTab }) => {
         />
         {error && error.length > 0 && <p className="text-red-500">{error}</p>}
       </label>
+
+      {/* Explanation note for users */}
+      <p className="text-gray-600">
+        New here? Don't worry! Click "Log In" to either sign up or log in. Our process is streamlined for both new and returning users.
+      </p>
 
       <button
         type={'submit'}
