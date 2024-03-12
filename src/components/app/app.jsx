@@ -19,6 +19,7 @@ import PrivateRoute from '../privateRoute/PrivateRoute';
 import PublicRoute from '../publicRoute/PublicRoute';
 import Success from '../../pages/success/Success';
 import MarketplacePayment from '../../pages/marketplace-payment/MarketplacePayment';
+import Contact from '../../pages/contact/Contact';
 
 function App() {
   return (
@@ -84,6 +85,10 @@ function App() {
         <Route
           path={routes.ticketValidate}
           element={<PrivateRoute component={Validate} />}
+        />
+        <Route
+          path={routes.contact}
+          element={<PublicRoute component={Contact} />}
         />
         <Route
           path={routes.error}

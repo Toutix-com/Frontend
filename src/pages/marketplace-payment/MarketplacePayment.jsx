@@ -7,6 +7,7 @@ import { activeCurrency } from '../../constants/currency';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { showToastError } from '../../utils/toast';
 import { stripePromise } from '../event-payment/EventPaymentPage';
+import { getTicketPrice } from '../../utils/common';
 
 const MarketplacePayment = () => {
   const location = useLocation();
@@ -114,7 +115,7 @@ const MarketplacePayment = () => {
               </div>
               <div className="flex items-center gap-2">
                 <div className="p-2 px-4 border border-blue-500 bg-blue-50">
-                  {location.state.ticket.price}
+                  {getTicketPrice(location.state.ticket)}
                   {activeCurrency}
                 </div>
               </div>
@@ -126,14 +127,14 @@ const MarketplacePayment = () => {
                 <div className="flex justify-between gap-4 py-2">
                   <p>Sub Total : </p>
                   <p>
-                    {checkoutDetails?.total?.toFixed(2)}
+                    {parseFloat(checkoutDetails?.total)?.toFixed(2)}
                     {activeCurrency}
                   </p>
                 </div>
                 <div className="flex justify-between gap-4 py-2">
                   <p>Platform Fee : </p>
                   <p>
-                    {checkoutDetails?.service?.toFixed(2)}
+                    {parseFloat(checkoutDetails?.service)?.toFixed(2)}
                     {activeCurrency}
                   </p>
                 </div>
@@ -141,7 +142,8 @@ const MarketplacePayment = () => {
                   <p>Total : </p>
                   <p>
                     {(
-                      checkoutDetails?.total + checkoutDetails?.service
+                      parseFloat(checkoutDetails?.total) +
+                      parseFloat(checkoutDetails?.service)
                     ).toFixed(2)}
                     {activeCurrency}
                   </p>

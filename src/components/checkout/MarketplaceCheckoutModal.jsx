@@ -6,6 +6,7 @@ import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { activeCurrency } from '../../constants/currency';
 import { useNavigate } from 'react-router-dom';
 import { showToastError } from '../../utils/toast';
+import { getTicketPrice } from '../../utils/common';
 
 const MarketplaceCheckoutModal = ({
   showModal,
@@ -87,7 +88,7 @@ const MarketplaceCheckoutModal = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="p-2 px-4 border border-blue-500 bg-blue-50">
-                    {ticket.price}
+                    {getTicketPrice(ticket)}
                     {activeCurrency}
                   </div>
                 </div>
@@ -103,14 +104,14 @@ const MarketplaceCheckoutModal = ({
                       <div className="flex justify-between gap-4 py-2">
                         <p>Sub Total : </p>
                         <p>
-                          {checkoutDetails?.total?.toFixed(2)}
+                          {parseFloat(checkoutDetails?.total)?.toFixed(2)}
                           {activeCurrency}
                         </p>
                       </div>
                       <div className="flex justify-between gap-4 py-2">
                         <p>Platform Fee : </p>
                         <p>
-                          {checkoutDetails?.service?.toFixed(2)}
+                          {parseFloat(checkoutDetails?.service)?.toFixed(2)}
                           {activeCurrency}
                         </p>
                       </div>
@@ -118,7 +119,8 @@ const MarketplaceCheckoutModal = ({
                         <p>Total : </p>
                         <p>
                           {(
-                            checkoutDetails?.total + checkoutDetails?.service
+                            parseFloat(checkoutDetails?.total) +
+                            parseFloat(checkoutDetails?.service)
                           ).toFixed(2)}
                           {activeCurrency}
                         </p>

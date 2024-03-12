@@ -16,7 +16,6 @@ export const getTicketPrice = (ticket) => {
   if (ticket.Status === ticketStatus.Available) {
     return getTotalPrice(ticket.InitialPrice);
   }
-  if (ticket.Status === ticketStatus.ListedonMarketplace) {
-    return getTotalPrice(ticket.Price);
-  }
+
+  return getTotalPrice(ticket.Price);
 };
