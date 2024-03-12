@@ -28,7 +28,7 @@ const Navbar = () => {
     <div
       className={` ${isNavbarTransparent ? 'absolute top-0 inset-x-0 bg-transparent  z-50 text-white ' : 'relative bg-gray-200 shadow-md '}   w-full px-4 py-4 md:px-10 md:py-5`}
     >
-      <div className="flex justify-between w-full max-w-7xl mx-auto">
+      <div className="flex justify-between w-full mx-auto max-w-7xl">
         <div className="flex items-center justify-between">
           <Link to={routes.home}>
             <img
@@ -42,7 +42,7 @@ const Navbar = () => {
           <nav
             className={`mt-4 md:mt-0 md:flex md:items-center font-light text-sm md:text-base ${isOpen ? 'block' : 'hidden'}`}
           >
-            <ul className="absolute inset-x-0 z-10 flex flex-col px-4 pb-4  md:items-center md:pb-0 md:flex-row md:relative top-full md:top-0 ">
+            <ul className="absolute inset-x-0 z-10 flex flex-col px-4 pb-4 md:items-center md:pb-0 md:flex-row md:relative top-full md:top-0 ">
               <TERipple>
                 <Link
                   to={routes.marketplace}
@@ -62,7 +62,7 @@ const Navbar = () => {
               </TERipple>
               <TERipple>
                 <Link
-                  to="#"
+                  to={routes.contact}
                   className={`block px-3 py-2 md:py-0 font-medium hover:font-semibold ${pathname === routes.contact ? 'underline' : 'hover:underline '} underline-offset-4`}
                 >
                   Contact

@@ -22,6 +22,7 @@ const OTPComponent = ({ setTab }) => {
     const regex = /^\d+$/;
     return regex.test(otp);
   };
+  const email = cookies[browserStorage.loginEmail];
 
   const handleOTPValidation = async (e) => {
     e.preventDefault();
@@ -30,7 +31,6 @@ const OTPComponent = ({ setTab }) => {
       return;
     }
     try {
-      const email = cookies[browserStorage.loginEmail];
       if (!email) return;
       setIsLoading(true);
       const { data } = await publicAxiosInstance.post('/auth/validateOTP', {
@@ -72,9 +72,7 @@ const OTPComponent = ({ setTab }) => {
       onSubmit={handleOTPValidation}
       className="flex flex-col gap-6 text-sm "
     >
-      <p className="text-center text-gray-600">
-        Enter OTP sent to abcd@email.com
-      </p>
+      <p className="text-center text-gray-600">Enter OTP sent to {email}</p>
       <div className="mx-auto">
         <OTPInput
           value={otp}

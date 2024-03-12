@@ -74,7 +74,8 @@ const Login = ({ setTab }) => {
 
       {/* Explanation note for users */}
       <p className="text-gray-600">
-        New here? Don't worry! Click "Log In" to either sign up or log in. Our process is streamlined for both new and returning users.
+        New here? Don't worry! Click "Log In" to either sign up or log in. Our
+        process is streamlined for both new and returning users.
       </p>
 
       <button
