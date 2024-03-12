@@ -145,17 +145,21 @@ const SingleTicket = ({ ticket, isValidating = false, refetch = () => {} }) => {
         </div>
         {!isValidating && (
           <div className="flex flex-col gap-3 p-5 pt-0">
-            <button
-              onClick={handleMarketplaceClick}
-              disabled={loading}
-              className="w-full p-2 text-sm text-white bg-blue-500 rounded-lg "
-            >
-              {Status === ticketStatus.Available
-                ? 'List on Marketplace'
-                : Status === ticketStatus.ListedonMarketplace
-                  ? 'Delist from Marketplace'
-                  : ''}
-            </button>
+            {Status === ticketStatus.Available ||
+              (Status === ticketStatus.ListedonMarketplace && (
+                <button
+                  onClick={handleMarketplaceClick}
+                  disabled={loading}
+                  className="w-full p-2 text-sm text-white bg-blue-500 rounded-lg "
+                >
+                  {Status === ticketStatus.Available
+                    ? 'List on Marketplace'
+                    : Status === ticketStatus.ListedonMarketplace
+                      ? 'Delist from Marketplace'
+                      : ''}
+                </button>
+              ))}
+
             <button
               onClick={handlePrintTicket}
               className="w-full p-2 text-sm text-blue-500 border border-blue-500 rounded-lg "

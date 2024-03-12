@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { showToastSuccess } from '../../utils/toast';
-import { format } from 'date-fns';
+import { format, isValid } from 'date-fns';
 
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -121,7 +121,11 @@ const UserProfile = () => {
                   placeholder="Date of Birth"
                 />
               ) : (
-                <p>{format(new Date(dob), 'do MMM yyyy')}</p>
+                <p>
+                  {dob &&
+                    isValid(new Date(dob)) &&
+                    format(new Date(dob), 'do MMM yyyy')}
+                </p>
               )}
             </div>
             <div>
