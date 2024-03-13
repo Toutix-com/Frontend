@@ -77,7 +77,7 @@ const SingleTicket = ({ ticket, isValidating = false, refetch = () => {} }) => {
           ref={componentRef}
           className="flex flex-col w-full gap-3 p-5 bg-white rounded-t-lg"
         >
-          <h2 className="text-lg font-semibold ">Your Ticket</h2>
+          <h2 className="text-lg font-semibold ">Ticket</h2>
 
           <img className="object-cover h-40 " src={image_url} alt="" />
           <div className="flex flex-col flex-1 gap-2 text-xs">

@@ -53,7 +53,7 @@ const OTPComponent = ({ setTab }) => {
       setIsLoading(false);
       removeCookie(browserStorage.loginEmail);
       removeCookie(browserStorage.otpExpiry);
-      if (data.first_time_login === true) {
+      if (data.first_name === '' || data.first_name === null) {
         setTab('name');
       } else {
         dispatch(toggleAuthModal(false));

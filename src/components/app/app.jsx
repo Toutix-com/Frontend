@@ -20,6 +20,7 @@ import PublicRoute from '../publicRoute/PublicRoute';
 import Success from '../../pages/success/Success';
 import MarketplacePayment from '../../pages/marketplace-payment/MarketplacePayment';
 import Contact from '../../pages/contact/Contact';
+import About from '../../pages/about/About';
 
 function App() {
   return (
@@ -89,6 +90,10 @@ function App() {
         <Route
           path={routes.contact}
           element={<PublicRoute component={Contact} />}
+        />
+        <Route
+          path={routes.aboutUs}
+          element={<PublicRoute component={About} />}
         />
         <Route
           path={routes.error}

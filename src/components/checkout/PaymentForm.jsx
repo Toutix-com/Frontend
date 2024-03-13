@@ -88,7 +88,7 @@ const PaymentForm = ({ clientSecret }) => {
         </span>
       </button>
       {/* Show any error or success messages */}
-      {message && <div className="mt-1 text-sm text-gray-500">{message}</div>}
+      {message && <div className="mt-1 text-sm text-red-500">{message}</div>}
     </form>
   );
 };

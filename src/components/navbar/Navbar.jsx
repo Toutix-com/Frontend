@@ -42,7 +42,7 @@ const Navbar = () => {
           <nav
             className={`mt-4 md:mt-0 md:flex md:items-center font-light text-sm md:text-base ${isOpen ? 'block' : 'hidden'}`}
           >
-            <ul className="absolute inset-x-0 z-10 flex flex-col px-4 pb-4 md:items-center md:pb-0 md:flex-row md:relative top-full md:top-0 ">
+            <ul className="absolute inset-x-0 z-10 flex flex-col px-4 pb-4 bg-gray-200 md:bg-transparent md:items-center md:pb-0 md:flex-row md:relative top-full md:top-0 ">
               <TERipple>
                 <Link
                   to={routes.marketplace}
@@ -54,7 +54,7 @@ const Navbar = () => {
 
               <TERipple>
                 <Link
-                  to="#"
+                  to={routes.aboutUs}
                   className={`block px-3 py-2 md:py-0 font-medium hover:font-semibold ${pathname === routes.aboutUs ? 'underline' : 'hover:underline '} underline-offset-4`}
                 >
                   About Us
@@ -74,7 +74,7 @@ const Navbar = () => {
                     onClick={() => dispatch(toggleAuthModal(true))}
                     className="p-2 px-4 mt-4 font-medium text-white bg-blue-500 rounded-md md:ml-6 md:mt-0"
                   >
-                    Login/signup
+                    Login/Sign Up
                   </button>
                 </TERipple>
               )}

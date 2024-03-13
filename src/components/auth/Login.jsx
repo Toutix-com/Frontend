@@ -1,17 +1,24 @@
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { FcGoogle } from 'react-icons/fc';
+import { useDispatch } from 'react-redux';
 import { browserStorage } from '../../constants/storage';
+import { setCredentials, toggleAuthModal } from '../../store/auth/authSlice';
 import { publicAxiosInstance } from '../../utils/axiosConfig';
+import { auth } from '../../utils/firebase';
 import { showToastError, showToastSuccess } from '../../utils/toast';
 
 const Login = ({ setTab }) => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [_, setCookie] = useCookies([
+
+  const dispatch = useDispatch();
+  const [cookies, setCookie, removeCookie] = useCookies([
     browserStorage.loginEmail,
-    browserStorage.otpExpiry
+    browserStorage.otpExpiry,
+    browserStorage.accessToken
   ]);
 
   const validateEmail = (email) => {
@@ -53,8 +60,63 @@ const Login = ({ setTab }) => {
     }
   };
 
-  const handleGoogleSignIn = () => {
+  const googleSignIn = () => {
+    const googleAuthProvider = new GoogleAuthProvider();
+    return signInWithPopup(auth, googleAuthProvider);
+  };
+
+  const handleGoogleSignIn = async () => {
     // Handle sign-in with Google logic
+    const res = await googleSignIn();
+    if (!res.user) {
+      showToastError('An error occurred while signing in with Google');
+      return;
+    }
+    const email = res.user.email;
+    const first_name = res.user.displayName.split(' ')[0];
+    const last_name = res.user.displayName.split(' ')[1];
+    setIsLoading(true);
+    setError('');
+    try {
+      const { data } = await publicAxiosInstance.post('/auth/login', {
+        email,
+        is_social_login: true,
+        first_name,
+        last_name
+      });
+      showToastSuccess(data.message);
+
+      dispatch(
+        setCredentials({
+          email: data.email,
+          userID: data.user_id,
+          isFirstTimeLogin: data.first_time_login
+        })
+      );
+      setCookie(browserStorage.accessToken, data.access_token, {
+        path: '/',
+        maxAge: 3600 * 24 * 7
+      });
+      showToastSuccess(data.message);
+      setIsLoading(false);
+      removeCookie(browserStorage.loginEmail);
+      removeCookie(browserStorage.otpExpiry);
+
+      dispatch(toggleAuthModal(false));
+
+      // Handle the response data as needed
+    } catch (err) {
+      if (
+        err?.response?.status &&
+        err?.response?.status === 400 &&
+        err?.response?.data?.error
+      ) {
+        showToastError(err?.response?.data?.error);
+      } else {
+        setError(err.message);
+      }
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -88,7 +150,7 @@ const Login = ({ setTab }) => {
       <button
         type="button"
         onClick={handleGoogleSignIn}
-        className="flex items-center justify-center w-full gap-2 p-3 text-gray-700 border-2 hover:bg-blue-50 border-blue-400 rounded-lg"
+        className="flex items-center justify-center w-full gap-2 p-3 text-gray-700 border-2 border-blue-400 rounded-lg hover:bg-blue-50"
       >
         <FcGoogle className="text-2xl" /> Sign In with Google
       </button>

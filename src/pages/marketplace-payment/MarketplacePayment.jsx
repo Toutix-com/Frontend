@@ -98,7 +98,7 @@ const MarketplacePayment = () => {
 
   return (
     <div className="min-h-screen p-4 bg-gray-100 sm:p-10 md:p-16">
-      <div className="flex w-full gap-16 mx-auto max-w-7xl">
+      <div className="flex flex-col w-full gap-6 mx-auto lg:flex-row lg:gap-16 max-w-7xl">
         <div className="relative flex flex-col w-full max-w-2xl gap-6 p-8 mx-auto bg-gray-100">
           <div className="flex flex-col gap-3">
             <img
