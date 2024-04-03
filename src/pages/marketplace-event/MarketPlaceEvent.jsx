@@ -56,10 +56,11 @@ const MarketPlaceEvent = () => {
             <div className="flex flex-col gap-10 ">
               <div className="flex flex-col">
                 <h1 className="text-4xl font-medium tracking-normal">
-                  Tickets
+                  Market listing
                 </h1>
                 <p className="text-gray-500">
-                  Check all the event tickets here.
+                  Find authentic tickets that is exclusively sold on our
+                  platform.
                 </p>
               </div>
               {isLoading ? (

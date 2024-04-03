@@ -53,7 +53,7 @@ const UserDropdown = () => {
             My Tickets
           </Link>
         </TEDropdownItem>
-        {/* 
+
         <TEDropdownItem>
           <Link
             to={`/users/${userID}/events`}
@@ -61,7 +61,7 @@ const UserDropdown = () => {
           >
             My Events
           </Link>
-        </TEDropdownItem> */}
+        </TEDropdownItem>
         <TEDropdownItem>
           <button
             onClick={handleLogout}
