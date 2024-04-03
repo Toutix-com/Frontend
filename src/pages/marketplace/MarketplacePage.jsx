@@ -24,10 +24,10 @@ const MarketplacePage = () => {
 
   return (
     <div className="w-screen min-h-screen">
-      <div className="h-[30vh] bg-cover bg-no-repeat bg-center bg-home-bg-banner relative">
+      <div className="h-[40vh] bg-cover bg-no-repeat bg-left-bottom bg-marketplace-bg-banner relative">
         <div className="absolute inset-0 grid p-4 sm:p-10 md:p-24 backdrop-filter backdrop-blur-sm place-items-center ">
           <h1 className="max-w-5xl font-semibold leading-[72px] lg:leading-[110px] text-center text-white text-6xl drop-shadow-lg ">
-            PURCHASE TICKETS FOR EVENTS
+            A Marketplace to Buy and Sell your Tickets
           </h1>
         </div>
       </div>

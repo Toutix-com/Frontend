@@ -19,7 +19,8 @@ module.exports = {
       'gradient-to-tl':
         'linear-gradient(to top left, var(--tw-gradient-stops))',
       'home-bg-banner': 'url(./assets/toutix-bg.webp )',
-      'login-bg-banner': 'url(./assets/toutix-login-bg.jpeg)'
+      'login-bg-banner': 'url(./assets/toutix-login-bg.jpeg)',
+      'marketplace-bg-banner': 'url(./assets/toutix-marketplace-bg.webp)'
     }
   },
   plugins: [require('tw-elements-react/dist/plugin.cjs')]

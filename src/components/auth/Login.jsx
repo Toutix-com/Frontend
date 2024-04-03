@@ -97,12 +97,15 @@ const Login = ({ setTab }) => {
         path: '/',
         maxAge: 3600 * 24 * 7
       });
-      showToastSuccess(data.message);
       setIsLoading(false);
       removeCookie(browserStorage.loginEmail);
       removeCookie(browserStorage.otpExpiry);
 
-      dispatch(toggleAuthModal(false));
+      if (data.first_name === '' || data.first_name === null) {
+        setTab('name');
+      } else {
+        dispatch(toggleAuthModal(false));
+      }
 
       // Handle the response data as needed
     } catch (err) {

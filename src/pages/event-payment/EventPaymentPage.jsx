@@ -9,7 +9,7 @@ import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { showToastError } from '../../utils/toast';
 
 export const stripePromise = loadStripe(
-  'pk_test_51OjNO1L6oeMlaoGU6CjNs3HlOgqKEXnwOmJXQnfraRe5PDL7q3Q7AkrFVezntaCZ8h2NYibYtjjEwEK7BFoVnWkv001eJdfSBQ'
+  'pk_live_51OjNO1L6oeMlaoGUOkabFbaA1MxypOLWGxkXjRawd2jlnhWwGcAHyRBBucbBLDkHuO2srHz8J2nZ7zOhzFhInHZ300UmTetbB1'
 );
 
 const EventPaymentPage = () => {
