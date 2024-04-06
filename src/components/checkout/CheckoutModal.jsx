@@ -90,10 +90,13 @@ const CheckoutModal = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="p-2 px-4 border border-blue-500 bg-blue-50">
+                    {numOfTicketSelected}
+                  </div>
+                  x
+                  <div className="">
                     {ticket.price}
                     {activeCurrency}
                   </div>
-                  <p>x {numOfTicketSelected}</p>
                 </div>
               </div>
             </div>
