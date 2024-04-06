@@ -16,7 +16,7 @@ import UserTicketsPage from '../../pages/user-tickets/UserTicketsPage';
 import Validate from '../../pages/validate/Validate';
 import Navbar from '../navbar/Navbar';
 import PrivateRoute from '../privateRoute/privateRoute';
-import PublicRoute from '../publicRoute/PublicRoute';
+import PublicRoute from '../publicRoute/publicRoute';
 import Success from '../../pages/success/Success';
 import MarketplacePayment from '../../pages/marketplace-payment/MarketplacePayment';
 import Contact from '../../pages/contact/Contact';
