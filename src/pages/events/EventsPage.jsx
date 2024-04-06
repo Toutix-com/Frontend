@@ -34,9 +34,7 @@ const EventsPage = () => {
       <div className="px-4 py-20 bg-gray-300 sm:px-10 md:px-24">
         <div className="flex flex-col gap-10 mx-auto max-w-7xl">
           <div className="flex flex-col">
-            <h1 className="text-4xl font-medium tracking-normal">
-              Events Testing
-            </h1>
+            <h1 className="text-4xl font-medium tracking-normal">Events</h1>
             <p className="text-gray-500">Don't miss on any events</p>
           </div>
           <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
