@@ -38,9 +38,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "serve -s build",
     "build": "react-scripts build",
-    "dev": "react-scripts start",
+    "start": "react-scripts start",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx",
     "fix-lint": "eslint . --ext .js,.jsx --fix",
