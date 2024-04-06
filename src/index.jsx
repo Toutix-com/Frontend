@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import reportWebVitals from './reportWebVitals';
 import { register } from './serviceWorkerRegistration';
-import App from './components/app/App';
+import App from './components/app/app';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
