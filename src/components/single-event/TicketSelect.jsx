@@ -1,15 +1,16 @@
-import React, { useMemo, useState } from 'react';
-import CheckoutModal from '../checkout/CheckoutModal';
+import { isPast } from 'date-fns';
+import React, { Fragment, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleAuthModal } from '../../store/auth/authSlice';
 import { activeCurrency } from '../../constants/currency';
+import { toggleAuthModal } from '../../store/auth/authSlice';
+import CheckoutModal from '../checkout/CheckoutModal';
+import Counter from './Counter';
 
 const TicketSelect = ({ ticket, event }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const dispatch = useDispatch();
   const [numOfTicketSelected, setNumOfTicketSelected] = useState(0);
-
   const { name, description, price, max_limit, ticket_sold } = ticket;
 
   const maxNumberOfSeats = useMemo(
@@ -20,6 +21,11 @@ const TicketSelect = ({ ticket, event }) => {
   const numOfSeatsLeft = useMemo(
     () => max_limit - ticket_sold,
     [max_limit, ticket_sold]
+  );
+
+  const isEventOver = useMemo(
+    () => numOfSeatsLeft === 0 || isPast(new Date(event.EndTime)),
+    [event.EndTime, numOfSeatsLeft]
   );
 
   const handleCheckout = () => {
@@ -42,7 +48,7 @@ const TicketSelect = ({ ticket, event }) => {
               Only {numOfSeatsLeft} seats left
             </p>
           )}
-          {numOfSeatsLeft === 0 && (
+          {isEventOver && (
             <p className="text-sm font-light text-red-400 ">Sold Out</p>
           )}
           <p className="text-sm font-light text-gray-400 ">{description}</p>
@@ -53,32 +59,30 @@ const TicketSelect = ({ ticket, event }) => {
           {activeCurrency}
         </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <p className="text-sm text-gray-400">Select Number of Seats</p>
-        <div className="flex flex-wrap items-center gap-2 ">
-          {[...Array(maxNumberOfSeats).keys()].map((item, idx) => {
-            const isActive = item + 1 <= numOfTicketSelected;
-            const isDisabled = numOfSeatsLeft === 0;
-            return (
-              <div
-                key={idx}
-                onClick={() => !isDisabled && setNumOfTicketSelected(item + 1)}
-                className={`p-2 px-3 text-sm  border  ${isActive ? 'border-blue-500 text-blue-500 bg-blue-100' : 'border-gray-500 text-gray-500 bg-gray-100'}  rounded-md cursor-pointer md:px-4 md:text-lg ${isDisabled && 'opacity-50'}`}
-              >
-                {item + 1}
-              </div>
-            );
-          })}
-        </div>
-      </div>
 
-      <button
-        onClick={handleCheckout}
-        disabled={numOfSeatsLeft === 0 || numOfTicketSelected === 0}
-        className="p-3 px-6 ml-auto text-sm font-medium text-center text-white bg-blue-500 rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
-      >
-        Proceed to Checkout
-      </button>
+      {!isEventOver && (
+        <Fragment>
+          <Counter
+            numOfSeatsLeft={numOfSeatsLeft}
+            numOfTicketSelected={numOfTicketSelected}
+            setNumOfTicketSelected={setNumOfTicketSelected}
+            maxNumberOfSeats={maxNumberOfSeats}
+          />
+
+          <button
+            onClick={handleCheckout}
+            disabled={
+              numOfSeatsLeft === 0 ||
+              numOfTicketSelected === 0 ||
+              isNaN(numOfTicketSelected)
+            }
+            className="p-3 px-6 ml-auto text-sm font-medium text-center text-white bg-blue-500 rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
+          >
+            Proceed to Checkout
+          </button>
+        </Fragment>
+      )}
+
       <CheckoutModal
         showModal={showCheckoutModal}
         setShowModal={setShowCheckoutModal}
