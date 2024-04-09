@@ -11,7 +11,7 @@ const About = () => {
         </p>
         <h2 className="mb-2 text-xl font-semibold">Our Founders</h2>
         <p className="mb-6">
-          Our company was founded by Dillane Wehebe, who serves as the CEO, and
+          Our company was founded by Dillane Wehbe, who serves as the CEO, and
           Daniel Zhang, who serves as the CTO. Both Dillane and Daniel are
           graduates of Durham University.
         </p>
