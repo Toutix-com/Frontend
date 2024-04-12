@@ -43,7 +43,7 @@ const Navbar = () => {
             className={`mt-4 md:mt-0 md:flex md:items-center font-light text-sm md:text-base ${isOpen ? 'block' : 'hidden'}`}
           >
             <ul
-              className={`absolute inset-x-0 z-10 flex flex-col px-4 pb-4 ${isNavbarTransparent ? 'bg-black/10 shadow-md backdrop-blur-md lg:backdrop-blur-none' : 'bg-gray-200 pb-4'} md:bg-transparent md:items-center md:pb-0 md:flex-row md:relative top-full md:top-0`}
+              className={`absolute inset-x-0 z-10 flex flex-col px-4 pb-4 ${isNavbarTransparent ? 'bg-black/10 shadow-md backdrop-blur-md lg:backdrop-blur-none lg:shadow-none lg:bg-transparent' : 'bg-gray-200 pb-4'} md:bg-transparent md:items-center md:pb-0 md:flex-row md:relative top-full md:top-0`}
             >
               <TERipple>
                 <Link
