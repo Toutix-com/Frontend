@@ -41,7 +41,6 @@ const Login = ({ setTab }) => {
       const { data } = await publicAxiosInstance.post('/auth/login', { email });
       console.log(data);
       showToastSuccess(data.message);
-      alert('Please copy your OTP for now ' + data.otp);
       setCookie(browserStorage.otpExpiry, data.otp_expiry);
       setTab('otp');
       setIsLoading(false);

@@ -24,9 +24,9 @@ const MarketplacePage = () => {
 
   return (
     <div className="w-screen min-h-screen">
-      <div className="h-[40vh] bg-cover bg-no-repeat bg-left-bottom bg-marketplace-bg-banner relative">
-        <div className="absolute inset-0 grid p-4 sm:p-10 md:p-24 backdrop-filter backdrop-blur-sm place-items-center ">
-          <h1 className="max-w-5xl font-semibold leading-[72px] lg:leading-[110px] text-center text-white text-6xl drop-shadow-lg ">
+      <div className="h-[60vh] lg:h-[80vh] bg-cover bg-no-repeat bg-left-bottom bg-marketplace-bg-banner relative">
+        <div className="absolute inset-0 grid p-4 sm:p-10 md:p-24 bg-black/10 backdrop-filter backdrop-blur-sm place-items-center ">
+          <h1 className="max-w-5xl p-4 font-semibold leading-[72px] lg:leading-[110px] text-center text-white text-4xl lg:text-6xl drop-shadow-lg ">
             A Marketplace to Buy and Sell your Tickets
           </h1>
         </div>
@@ -34,7 +34,7 @@ const MarketplacePage = () => {
       <div className="h-full px-4 py-20 bg-gray-200 sm:px-10 md:px-24">
         <div className="flex flex-col gap-10 mx-auto max-w-7xl">
           <div className="flex flex-col">
-            <h1 className="text-4xl font-medium tracking-normal">
+            <h1 className="text-2xl font-medium tracking-normal lg:text-4xl">
               Events Marketplace
             </h1>
             <p className="text-gray-500">

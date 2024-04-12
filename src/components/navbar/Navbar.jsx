@@ -32,7 +32,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <Link to={routes.home}>
             <img
-              className={`object-contain h-10 drop-shadow-md ${!isNavbarTransparent && 'invert'} `}
+              className={`object-contain h-6 lg:h-10 drop-shadow-md ${!isNavbarTransparent && 'invert'} `}
               src={NavLogo}
               alt=""
             />
@@ -42,10 +42,13 @@ const Navbar = () => {
           <nav
             className={`mt-4 md:mt-0 md:flex md:items-center font-light text-sm md:text-base ${isOpen ? 'block' : 'hidden'}`}
           >
-            <ul className="absolute inset-x-0 z-10 flex flex-col px-4 pb-4 bg-gray-200 md:bg-transparent md:items-center md:pb-0 md:flex-row md:relative top-full md:top-0 ">
+            <ul
+              className={`absolute inset-x-0 z-10 flex flex-col px-4 pb-4 ${isNavbarTransparent ? 'bg-black/10 shadow-md backdrop-blur-md lg:backdrop-blur-none' : 'bg-gray-200 pb-4'} md:bg-transparent md:items-center md:pb-0 md:flex-row md:relative top-full md:top-0`}
+            >
               <TERipple>
                 <Link
                   to={routes.marketplace}
+                  onClick={toggleNavbar}
                   className={`block px-3 py-2 md:py-0 font-medium hover:font-semibold ${pathname === routes.marketplace ? 'underline' : 'hover:underline '} underline-offset-4`}
                 >
                   MarketPlace
@@ -55,6 +58,7 @@ const Navbar = () => {
               <TERipple>
                 <Link
                   to={routes.aboutUs}
+                  onClick={toggleNavbar}
                   className={`block px-3 py-2 md:py-0 font-medium hover:font-semibold ${pathname === routes.aboutUs ? 'underline' : 'hover:underline '} underline-offset-4`}
                 >
                   About Us
@@ -63,6 +67,7 @@ const Navbar = () => {
               <TERipple>
                 <Link
                   to={routes.contact}
+                  onClick={toggleNavbar}
                   className={`block px-3 py-2 md:py-0 font-medium hover:font-semibold ${pathname === routes.contact ? 'underline' : 'hover:underline '} underline-offset-4`}
                 >
                   Contact
@@ -71,7 +76,10 @@ const Navbar = () => {
               {!user && (
                 <TERipple>
                   <button
-                    onClick={() => dispatch(toggleAuthModal(true))}
+                    onClick={() => {
+                      dispatch(toggleAuthModal(true));
+                      toggleNavbar();
+                    }}
                     className="p-2 px-4 mt-4 font-medium text-white bg-blue-500 rounded-md md:ml-6 md:mt-0"
                   >
                     Login/Sign Up
