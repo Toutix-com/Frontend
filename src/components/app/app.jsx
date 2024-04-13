@@ -71,22 +71,22 @@ function App() {
           path={routes.userTickets}
           element={<PrivateRoute component={UserTicketsPage} />}
         />
-        <Route
+        {/* <Route
           path={routes.userEvents}
           element={<PrivateRoute component={UserEventsPage} />}
-        />
+        /> */}
         <Route
           path={routes.singleUserEvent}
-          element={<PrivateRoute component={SingleUserEventPage} />}
+          element={<PublicRoute component={SingleUserEventPage} />}
         />
         <Route
           path={routes.paymentSuccess}
           element={<PrivateRoute component={Success} />}
         />
-        <Route
+        {/* <Route
           path={routes.ticketValidate}
           element={<PrivateRoute component={Validate} />}
-        />
+        /> */}
         <Route
           path={routes.contact}
           element={<PublicRoute component={Contact} />}

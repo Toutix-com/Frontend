@@ -10,7 +10,7 @@ export const routes = {
   eventPayment: '/events/:eventID/checkout',
   marketplacePayment: '/marketplace/events/:eventID/checkout',
   userProfile: '/users/:userID/profile',
-  singleUserEvent: '/users/:userID/events/:eventID',
+  singleUserEvent: '/users/events/:eventID',
   ticketValidate: '/tickets/:ticketID/validate',
   contact: '/contact',
   aboutUs: '/about-us',

@@ -69,7 +69,7 @@ const SingleUserEventPage = () => {
   const percentageSold = (totalTicketsSold / totalTickets) * 100;
 
   return (
-    <div className="container p-4 mx-auto">
+    <div className="container flex flex-col w-full p-4 lg:mx-auto max-w-7xl">
       <h1 className="mb-8 text-3xl font-medium">Organizer Dashboard</h1>
 
       {/* Ticket Summary */}
