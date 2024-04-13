@@ -19,10 +19,10 @@ export const apiErrorResponse = (error) => {
 };
 
 const publicAxiosInstance = axios.create({
-  baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api'
+  baseURL: process.env.REACT_APP_API_URL
 });
 const privateAxiosInstance = axios.create({
-  baseURL: 'https://dxma1-3a04933dcf2c.herokuapp.com/api'
+  baseURL: process.env.REACT_APP_API_URL
 });
 
 const cookies = new Cookies();
