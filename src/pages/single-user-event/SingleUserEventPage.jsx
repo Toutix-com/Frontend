@@ -180,6 +180,7 @@ const SingleUserEventPage = () => {
               <table className="w-full border-collapse">
                 <thead className="font-medium border-b">
                   <tr>
+                    <th className="px-4 py-2">S No.</th>
                     <th className="px-4 py-2">First Name</th>
                     <th className="px-4 py-2">Last Name</th>
                     <th className="px-4 py-2">Email</th>
@@ -191,6 +192,7 @@ const SingleUserEventPage = () => {
                 <tbody>
                   {organizerData['Attendee List']?.map((attendee, index) => (
                     <tr key={index} className="text-center border-b">
+                      <td className="px-4 py-2">{index + 1}</td>
                       <td className="px-4 py-2">{attendee?.FirstName}</td>
                       <td className="px-4 py-2">{attendee?.LastName}</td>
                       <td className="px-4 py-2">{attendee?.Email}</td>
