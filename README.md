@@ -14,7 +14,7 @@ This is an extended version of React template from [Stellar Minore](https://stel
 
 #### Folder Structure:
 
-<img width="317" alt="Screen Shot 2022-11-22 at 7 43 26 PM" src="https://user-images.githubusercontent.com/37541648/203343023-e2e41a48-b755-402f-ad4b-bff2f4bbbdfe.png">
+<img width="317" alt="Screen Shot" src="https://user-images.githubusercontent.com/37541648/203343023-e2e41a48-b755-402f-ad4b-bff2f4bbbdfe.png">
 
 > If your app requires auth, you might not have to deal with all the boilerplate for RTK and start working on rest of flow.
 
