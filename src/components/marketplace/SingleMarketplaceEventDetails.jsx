@@ -27,7 +27,7 @@ const SingleMarketplaceEventDetails = ({ event }) => {
     [EndTime]
   );
   return (
-    <div className="grid w-full grid-cols-2 gap-8 mx-auto">
+    <div className="grid w-full grid-cols-1 gap-8 mx-auto md:grid-cols-2">
       <div className="relative h-[300px] ">
         <img className="w-full h-[300px] object-cover" src={image_url} alt="" />
         <div className="absolute bottom-4 right-4">

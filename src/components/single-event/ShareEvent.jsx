@@ -16,6 +16,7 @@ import {
   WhatsappIcon,
   WhatsappShareButton
 } from 'react-share';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
   TEModal,
   TEModalContent,
@@ -25,6 +26,14 @@ import {
 
 const ShareEvent = ({ urlToShare }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopy = () => {
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
+  };
 
   return (
     <div>
@@ -64,6 +73,11 @@ const ShareEvent = ({ urlToShare }) => {
               <TelegramShareButton url={urlToShare}>
                 <TelegramIcon size={32} round={true} />
               </TelegramShareButton>
+              <CopyToClipboard text={urlToShare} onCopy={handleCopy}>
+                <button className="flex items-center justify-center gap-2 p-3 py-2 mt-2 text-white bg-blue-500 border-2 border-white border-opacity-50 focus:outline-none">
+                  {isCopied ? 'Copied' : 'Copy Link'}
+                </button>
+              </CopyToClipboard>
             </div>
           </TEModalContent>
         </TEModalDialog>
