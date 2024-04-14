@@ -17,7 +17,6 @@ const SingleUserEventPage = () => {
       const { data } = await privateAxiosInstance.get(
         `/organiser/${eventID}/ticket_info`
       );
-      console.log(data);
       setOrganizerData(data);
       setIsLoading(false);
     } catch (error) {
@@ -96,24 +95,26 @@ const SingleUserEventPage = () => {
                   className="p-4 text-gray-600 bg-gray-100 border rounded-lg"
                 >
                   <h3 className="mb-2 text-lg font-medium text-black">
-                    {category.Name}
+                    {category?.Name}
                   </h3>
                   <p>
-                    Price: {activeCurrency}
-                    {category.Price}
+                    Price:{' '}
+                    <strong>
+                      {activeCurrency}
+                      {category?.Price}
+                    </strong>
                   </p>
                   <p>
-                    Max Limit: <strong>{category['Max Limit']}</strong>
+                    Max Limit: <strong>{category?.Max_Limit}</strong>
                   </p>
                   <p>
-                    Tickets Sold: <strong>{category['Tickets Sold']}</strong>
+                    Tickets Sold: <strong>{category?.Tickets_Sold}</strong>
                   </p>
                   <p>
-                    Tickets Left: <strong>{category['Tickets Left']}</strong>
+                    Tickets Left: <strong>{category?.Tickets_Left}</strong>
                   </p>
                   <p>
-                    Max Per Person:{' '}
-                    <strong>{category['Max Per Person']}</strong>
+                    Max Per Person: <strong>{category?.Max_Per_Person}</strong>
                   </p>
                   <p>
                     Highest Bid:{' '}
