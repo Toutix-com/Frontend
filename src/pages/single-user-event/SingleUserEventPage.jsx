@@ -15,7 +15,7 @@ const SingleUserEventPage = () => {
   const fetchOrganizerData = async () => {
     try {
       const { data } = await privateAxiosInstance.get(
-        `/organizer/{activeCurrency}{eventID}/ticket_info`
+        `/organiser/${eventID}/ticket_info`
       );
       console.log(data);
       setOrganizerData(data);
@@ -66,7 +66,13 @@ const SingleUserEventPage = () => {
               <div className="relative h-3 bg-gray-200 rounded-md">
                 <div
                   className="absolute top-0 left-0 h-full bg-blue-500 rounded-md"
-                  style={{ width: `{activeCurrency}{percentageSold}%` }}
+                  style={{
+                    width: `${
+                      (organizerData?.Total_Tickets_Sold /
+                        organizerData?.Total_Tickets) *
+                      100
+                    }%`
+                  }}
                 ></div>
               </div>
               <p className="mt-2 text-sm text-gray-600">
@@ -181,7 +187,7 @@ const SingleUserEventPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {organizerData?.Attendee_List?.map((attendee, index) => (
+                  {organizerData['Attendee List']?.map((attendee, index) => (
                     <tr key={index} className="border-b">
                       <td className="px-4 py-2">{attendee?.FirstName}</td>
                       <td className="px-4 py-2">{attendee?.LastName}</td>
