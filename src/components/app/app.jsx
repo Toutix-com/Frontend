@@ -27,7 +27,6 @@ function App() {
     <div className="relative min-h-screen">
       <ToastContainer
         position="top-right"
-        autoClose={3000}
         newestOnTop={true}
         hideProgressBar={true}
         closeOnClick

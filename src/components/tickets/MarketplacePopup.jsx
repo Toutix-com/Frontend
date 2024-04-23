@@ -102,7 +102,7 @@ const MarketplacePopup = ({
                 <p>Enter Listing Price</p>
                 <input
                   type="range"
-                  min={Math.max(2, getTicketPrice(ticket))}
+                  min={2}
                   max={2 * getTicketPrice(ticket)}
                   step="0.5"
                   value={marketplacePrice}
