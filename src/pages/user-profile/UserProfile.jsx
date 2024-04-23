@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { showToastSuccess } from '../../utils/toast';
 import { format, isValid } from 'date-fns';
+import { activeCurrency } from '../../constants/currency';
 
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -61,7 +62,11 @@ const UserProfile = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+        <div className="flex flex-col w-full max-w-md gap-4 p-8 bg-white rounded-lg shadow-md ">
+          <h1 className="flex items-center justify-between text-xl font-semibold">
+            <span className="text-gray-500">Credits:</span> {activeCurrency}
+            {user?.Credit ?? 0}
+          </h1>
           <form
             onSubmit={handleUserProfileChange}
             className="space-y-4 text-sm"

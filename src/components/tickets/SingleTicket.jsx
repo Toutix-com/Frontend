@@ -121,27 +121,6 @@ const SingleTicket = ({ ticket, isValidating = false, refetch = () => {} }) => {
             <div className="absolute left-0 w-8 h-8 transform -translate-x-8 -translate-y-1/2 bg-gray-200 rounded-full "></div>
             <div className="absolute right-0 w-8 h-8 transform translate-x-8 -translate-y-1/2 bg-gray-200 rounded-full "></div>
           </div>
-
-          <div className="flex flex-col justify-center gap-3">
-            <div
-              style={{
-                height: 'auto',
-                margin: '0 auto',
-                maxWidth: 120,
-                width: '100%'
-              }}
-            >
-              <QRCode
-                size={256}
-                style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
-                value={url}
-                viewBox={`0 0 256 256`}
-              />
-            </div>
-          </div>
-          <p className="text-sm text-center text-gray-600">
-            Scan QR code for entry
-          </p>
         </div>
         {!isValidating && (
           <div className="flex flex-col gap-3 p-5 pt-0">

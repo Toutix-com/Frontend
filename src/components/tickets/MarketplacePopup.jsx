@@ -11,7 +11,7 @@ import {
   isEventActive
 } from '../../utils/common';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
-import { showToastSuccess } from '../../utils/toast';
+import { showToastInfo, showToastSuccess } from '../../utils/toast';
 import { set } from 'date-fns';
 
 const MarketplacePopup = ({
@@ -50,6 +50,9 @@ const MarketplacePopup = ({
       );
       if (data) {
         showToastSuccess('Ticket listed on marketplace successfully');
+        showToastInfo(
+          "Ticket Listed! If sold, you'll receive credits usable for future purchases or cash out through customer support."
+        );
       }
       setLoading(false);
       refetch();
@@ -99,7 +102,7 @@ const MarketplacePopup = ({
                 <p>Enter Listing Price</p>
                 <input
                   type="range"
-                  min={getTicketPrice(ticket)}
+                  min={Math.max(2, getTicketPrice(ticket))}
                   max={2 * getTicketPrice(ticket)}
                   step="0.5"
                   value={marketplacePrice}
