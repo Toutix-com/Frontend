@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import React, { useMemo, useState } from 'react';
+import MapComponent from '../map/MapComponent';
 import ShareEvent from './ShareEvent';
-
 const SingleEventDetails = ({ event }) => {
   const {
     DateTime,
@@ -87,6 +87,19 @@ const SingleEventDetails = ({ event }) => {
         <div className="flex flex-col gap-1 text-gray-600 ">
           <h2 className="text-2xl font-medium text-gray-800">Capacity</h2>
           <p className="text-sm font-light">{location?.Capacity}</p>
+        </div>
+        <div className="flex flex-col w-full col-span-2 gap-1 text-gray-600 ">
+          <h2 className="text-2xl font-medium text-gray-800">Direction</h2>
+          <MapComponent
+            lat={parseFloat(location?.latitude) ?? 9.9312}
+            lng={parseFloat(location?.longitude) ?? 76.2673}
+          />
+          <button
+            onClick={() => window.open(location.direction_url, '_blank')}
+            className="text-left text-blue-500 underline underline-offset-2"
+          >
+            Get Direction
+          </button>
         </div>
       </div>
     </div>

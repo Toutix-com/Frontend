@@ -17,7 +17,6 @@ const UserDropdown = () => {
     browserStorage.accessToken
   ]);
   const { user } = useSelector((state) => state.auth);
-  console.log(user, 'user');
   const userID = useMemo(() => user?.userID, [user]);
   const dispatch = useDispatch();
   const handleLogout = () => {
