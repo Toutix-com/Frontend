@@ -47,7 +47,7 @@ const EventPaymentPage = () => {
       ) {
         showToastError(error.response.data.error);
       }
-      //   navigate(`/events/${event.EventID}`);
+      navigate(`/events/${event.EventID}`);
       setLoading(false);
     }
   };
@@ -69,6 +69,11 @@ const EventPaymentPage = () => {
         if (data.is_eligible_to_purchase) {
           createPaymentIntent();
         } else {
+          showToastError(
+            data.error_message.length > 0
+              ? data.error_message
+              : 'You are not eligible to purchase this ticket'
+          );
           navigate(`/events/${event.EventID}`);
         }
 
@@ -83,6 +88,7 @@ const EventPaymentPage = () => {
       ) {
         showToastError(error.response.data.error);
       }
+      navigate(`/events/${event.EventID}`);
       setLoading(false);
     }
   };

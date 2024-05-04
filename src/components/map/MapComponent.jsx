@@ -8,7 +8,7 @@ const MapComponent = ({ lat, lng }) => {
       lat,
       lng
     },
-    zoom: 10
+    zoom: 20
   };
 
   return (
@@ -23,7 +23,7 @@ const MapComponent = ({ lat, lng }) => {
         <FaMapMarkerAlt
           lat={defaultProps.center.lat}
           lng={defaultProps.center.lng}
-          className="text-3xl"
+          className="text-4xl text-blue-500"
         />
       </GoogleMapReact>
     </div>

@@ -16,6 +16,7 @@ const MarketplaceCheckoutModal = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [checkoutDetails, setCheckoutDetails] = useState({});
+  const [error, setError] = useState('');
   const { user } = useSelector((state) => state.auth);
   const { EventID, Name, image_url, location } = event;
   const { Name: LocationName } = location;
@@ -33,6 +34,9 @@ const MarketplaceCheckoutModal = ({
 
       if (data) {
         setCheckoutDetails(data);
+        if (data.error_message?.length > 0) {
+          setError(data.error_message);
+        }
         setLoading(false);
       }
     } catch (error) {
@@ -129,7 +133,9 @@ const MarketplaceCheckoutModal = ({
                   ) : (
                     <div>
                       <p className="text-sm text-center text-red-500 ">
-                        Sorry, you are not eligible to purchase this ticket
+                        {error.length > 0
+                          ? error
+                          : 'Sorry, you are not eligible to purchase this ticket'}
                       </p>
                     </div>
                   )}

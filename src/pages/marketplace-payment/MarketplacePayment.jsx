@@ -44,7 +44,7 @@ const MarketplacePayment = () => {
       ) {
         showToastError(error.response.data.error);
       }
-      //   navigate(`/events/${event.EventID}`);
+      navigate(`/marketplace/events/${event.EventID}`);
       setLoading(false);
     }
   };
@@ -65,6 +65,11 @@ const MarketplacePayment = () => {
         if (data.is_eligible_to_purchase) {
           createPaymentIntent();
         } else {
+          showToastError(
+            data.error_message.length > 0
+              ? data.error_message
+              : 'You are not eligible to purchase this ticket'
+          );
           navigate(`/marketplace/events/${event.EventID}`);
         }
 
@@ -79,6 +84,7 @@ const MarketplacePayment = () => {
       ) {
         showToastError(error.response.data.error);
       }
+      navigate(`/marketplace/events/${event.EventID}`);
       setLoading(false);
     }
   };
