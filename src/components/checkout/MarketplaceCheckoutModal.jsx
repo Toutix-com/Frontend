@@ -12,6 +12,7 @@ const MarketplaceCheckoutModal = ({
   showModal,
   setShowModal,
   ticket,
+  marketplaceListing,
   event
 }) => {
   const [loading, setLoading] = useState(true);
@@ -92,7 +93,7 @@ const MarketplaceCheckoutModal = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="p-2 px-4 border border-blue-500 bg-blue-50">
-                    {getTicketPrice(ticket)}
+                    {marketplaceListing ? ticket.Price : getTicketPrice(ticket)}
                     {activeCurrency}
                   </div>
                 </div>

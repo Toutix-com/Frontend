@@ -87,6 +87,7 @@ const MarketPlaceEvent = () => {
                       <SingleMarketplaceTicket
                         key={ticket.TicketID}
                         ticket={ticket}
+                        marketplaceListing={true}
                       />
                     ))}
                   </div>

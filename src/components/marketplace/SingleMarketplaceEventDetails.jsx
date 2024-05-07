@@ -19,12 +19,12 @@ const SingleMarketplaceEventDetails = ({ event }) => {
     setShowFullText(!showFullText);
   };
   const eventStartDay = useMemo(
-    () => format(new Date(DateTime), 'dd MMM,yyyy hh:mm a'),
+    () => format(new Date(DateTime), 'dd MMM, yyyy hh:mm a'),
     [DateTime]
   );
 
   const eventEndDay = useMemo(
-    () => format(new Date(EndTime), 'dd MMM,yyyy hh:mm a'),
+    () => format(new Date(EndTime), 'dd MMM, yyyy hh:mm a'),
     [EndTime]
   );
   return (

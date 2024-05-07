@@ -4,7 +4,7 @@ import { activeCurrency } from '../../constants/currency';
 import { getTicketPrice } from '../../utils/common';
 import MarketplaceCheckoutModal from '../checkout/MarketplaceCheckoutModal';
 
-const SingleMarketplaceTicket = ({ ticket }) => {
+const SingleMarketplaceTicket = ({ ticket, marketplaceListing }) => {
   const { Category, Event, TicketID, Status, SeatNumber, Price, InitialPrice } =
     ticket;
   const { DateTime, Name, image_url, location } = Event;
@@ -57,7 +57,7 @@ const SingleMarketplaceTicket = ({ ticket }) => {
               <p className="text-gray-600">Price:</p>
               <p className="font-semibold text-gray-800">
                 {activeCurrency}
-                {getTicketPrice(ticket)}
+                {marketplaceListing ? ticket.Price : getTicketPrice(ticket)}
               </p>
             </div>
           </div>
@@ -80,6 +80,7 @@ const SingleMarketplaceTicket = ({ ticket }) => {
           setShowModal={setShowCheckoutPopup}
           ticket={ticket}
           event={Event}
+          marketplaceListing={marketplaceListing}
         />
       </div>
     </div>
