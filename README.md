@@ -9,7 +9,7 @@ This is an extended version of React template from [Stellar Minore](https://stel
 - React
 - Tailwind-css
 - Redux Toolkit
-- SASS Modules (`.module.scss`)
+- SASS Modules (`.module.scss`) 
 - Eslint / Stylint configured
 
 #### Folder Structure:
