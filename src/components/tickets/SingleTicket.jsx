@@ -1,14 +1,12 @@
 import { format } from 'date-fns';
 import React, { useMemo, useRef, useState } from 'react';
 import { activeCurrency } from '../../constants/currency';
-import { useReactToPrint } from 'react-to-print';
-import QRCode from 'react-qr-code';
 import { ticketStatus } from '../../constants/ticket';
+import { privateAxiosInstance } from '../../utils/axiosConfig';
+import { getTicketPrice } from '../../utils/common';
+import { showToastError, showToastSuccess } from '../../utils/toast';
 import ConfirmationModal from '../common/ConfirmationModal';
 import MarketplacePopup from './MarketplacePopup';
-import { getTicketPrice, getTotalPrice } from '../../utils/common';
-import { showToastSuccess } from '../../utils/toast';
-import { privateAxiosInstance } from '../../utils/axiosConfig';
 
 const SingleTicket = ({ ticket, isValidating = false, refetch = () => {} }) => {
   const { Category, Event, TicketID, Status, SeatNumber, Price, InitialPrice } =
@@ -17,6 +15,7 @@ const SingleTicket = ({ ticket, isValidating = false, refetch = () => {} }) => {
   const [showMarketplacePopup, setShowMarketplacePopup] = useState(false);
   const [showConfirmDelistPopup, setShowConfirmDelistPopup] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isPrinting, setIsPrinting] = useState(false);
   const eventStartDay = useMemo(
     () => format(new Date(DateTime), 'dd MMM,yyyy'),
     [DateTime]
@@ -25,17 +24,23 @@ const SingleTicket = ({ ticket, isValidating = false, refetch = () => {} }) => {
     () => format(new Date(DateTime), 'hh:mm a'),
     [DateTime]
   );
-  const url = useMemo(() => {
-    return `toutix.web.app/tickets/${TicketID}/validate`;
-  }, [TicketID]);
+
   const componentRef = useRef();
 
-  const handlePrintTicket = useReactToPrint({
-    content: () => componentRef.current,
-    documentTitle: Name + ' Ticket.',
-    suppressErrors: true,
-    pageStyle: '@page { size: 4in 7in }'
-  });
+  const handlePrintTicket = async () => {
+    setIsPrinting(true);
+    try {
+      const { data } = await privateAxiosInstance.get(
+        `/user/me/tickets/${TicketID}/download`
+      );
+      console.log(data);
+      window.open(data, '_blank');
+    } catch (err) {
+      showToastError('Error while downloading ticket');
+    } finally {
+      setIsPrinting(false);
+    }
+  };
 
   const handleMarketplaceClick = () => {
     if (Status === ticketStatus.ListedonMarketplace) {
@@ -141,9 +146,10 @@ const SingleTicket = ({ ticket, isValidating = false, refetch = () => {} }) => {
 
             <button
               onClick={handlePrintTicket}
+              disabled={isPrinting}
               className="w-full p-2 text-sm text-blue-500 border border-blue-500 rounded-lg "
             >
-              Print Ticket
+              {isPrinting ? 'Downloading' : 'Download'} Ticket
             </button>
           </div>
         )}
