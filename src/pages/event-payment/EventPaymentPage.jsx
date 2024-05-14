@@ -124,8 +124,8 @@ const EventPaymentPage = () => {
               </div>
               <div className="flex items-center gap-2">
                 <div className="p-2 px-4 border border-blue-500 bg-blue-50">
-                  {location.state.ticket.price}
                   {activeCurrency}
+                  {location.state.ticket.price}
                 </div>
                 <p>x {location.state.numOfTicketSelected}</p>
               </div>
@@ -137,24 +137,24 @@ const EventPaymentPage = () => {
                 <div className="flex justify-between gap-4 py-2">
                   <p>Sub Total : </p>
                   <p>
-                    {checkoutDetails?.total?.toFixed(2)}
                     {activeCurrency}
+                    {checkoutDetails?.total?.toFixed(2)}
                   </p>
                 </div>
                 <div className="flex justify-between gap-4 py-2">
                   <p>Platform Fee : </p>
                   <p>
-                    {checkoutDetails?.service?.toFixed(2)}
                     {activeCurrency}
+                    {checkoutDetails?.service?.toFixed(2)}
                   </p>
                 </div>
                 <div className="flex justify-between gap-4 py-2 border-t-2 border-gray-200">
                   <p>Total : </p>
                   <p>
+                    {activeCurrency}
                     {(
                       checkoutDetails?.total + checkoutDetails?.service
                     ).toFixed(2)}
-                    {activeCurrency}
                   </p>
                 </div>
               </div>

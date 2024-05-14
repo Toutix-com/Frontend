@@ -121,8 +121,8 @@ const MarketplacePayment = () => {
               </div>
               <div className="flex items-center gap-2">
                 <div className="p-2 px-4 border border-blue-500 bg-blue-50">
-                  {getTicketPrice(location.state.ticket)}
                   {activeCurrency}
+                  {getTicketPrice(location.state.ticket)}
                 </div>
               </div>
             </div>
@@ -133,25 +133,25 @@ const MarketplacePayment = () => {
                 <div className="flex justify-between gap-4 py-2">
                   <p>Sub Total : </p>
                   <p>
-                    {parseFloat(checkoutDetails?.total)?.toFixed(2)}
                     {activeCurrency}
+                    {parseFloat(checkoutDetails?.total)?.toFixed(2)}
                   </p>
                 </div>
                 <div className="flex justify-between gap-4 py-2">
                   <p>Platform Fee : </p>
                   <p>
-                    {parseFloat(checkoutDetails?.service)?.toFixed(2)}
                     {activeCurrency}
+                    {parseFloat(checkoutDetails?.service)?.toFixed(2)}
                   </p>
                 </div>
                 <div className="flex justify-between gap-4 py-2 border-t-2 border-gray-200">
                   <p>Total : </p>
                   <p>
+                    {activeCurrency}
                     {(
                       parseFloat(checkoutDetails?.total) +
                       parseFloat(checkoutDetails?.service)
                     ).toFixed(2)}
-                    {activeCurrency}
                   </p>
                 </div>
               </div>

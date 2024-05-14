@@ -92,8 +92,8 @@ const MarketplacePopup = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="p-2 px-4 border border-blue-500 bg-blue-50">
-                    {getTicketPrice(ticket)}
                     {activeCurrency}
+                    {getTicketPrice(ticket)}
                   </div>
                 </div>
               </div>
@@ -110,12 +110,12 @@ const MarketplacePopup = ({
                 />
                 <div className="flex items-center justify-between gap-2">
                   <p>
-                    {parseFloat(marketplacePrice).toFixed(2)}
                     {activeCurrency}
+                    {parseFloat(marketplacePrice).toFixed(2)}
                   </p>{' '}
                   <p>
-                    {parseFloat(getTicketPrice(ticket) * 2).toFixed(2)}
                     {activeCurrency}
+                    {parseFloat(getTicketPrice(ticket) * 2).toFixed(2)}
                   </p>{' '}
                 </div>
                 {/* Display the current value */}

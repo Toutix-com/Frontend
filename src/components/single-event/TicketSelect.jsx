@@ -55,8 +55,8 @@ const TicketSelect = ({ ticket, event }) => {
         </div>
 
         <div className="p-2 px-4 ml-auto border border-blue-500 bg-blue-50 max-w-max">
-          {price}
           {activeCurrency}
+          {price}
         </div>
       </div>
 

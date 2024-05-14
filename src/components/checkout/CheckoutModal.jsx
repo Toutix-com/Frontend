@@ -98,8 +98,8 @@ const CheckoutModal = ({
                   </div>
                   x
                   <div className="">
-                    {ticket.price}
                     {activeCurrency}
+                    {ticket.price}
                   </div>
                 </div>
               </div>
@@ -114,24 +114,24 @@ const CheckoutModal = ({
                       <div className="flex justify-between gap-4 py-2">
                         <p>Sub Total : </p>
                         <p>
-                          {checkoutDetails?.total?.toFixed(2)}
                           {activeCurrency}
+                          {checkoutDetails?.total?.toFixed(2)}
                         </p>
                       </div>
                       <div className="flex justify-between gap-4 py-2">
                         <p>Platform Fee : </p>
                         <p>
-                          {checkoutDetails?.service?.toFixed(2)}
                           {activeCurrency}
+                          {checkoutDetails?.service?.toFixed(2)}
                         </p>
                       </div>
                       <div className="flex justify-between gap-4 py-2 border-t-2 border-gray-200">
                         <p>Total : </p>
                         <p>
+                          {activeCurrency}
                           {(
                             checkoutDetails?.total + checkoutDetails?.service
                           ).toFixed(2)}
-                          {activeCurrency}
                         </p>
                       </div>
                     </div>
