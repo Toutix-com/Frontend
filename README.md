@@ -8,6 +8,7 @@ This is an extended version of React template from [Stellar Minore](https://stel
 
 - React
 - Tailwind-css
+- TW Elements
 - Redux Toolkit
 - SASS Modules (`.module.scss`)
 - Eslint / Stylint configured
