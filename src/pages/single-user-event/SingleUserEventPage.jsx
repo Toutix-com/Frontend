@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { routes } from '../../constants/routes';
 import { privateAxiosInstance } from '../../utils/axiosConfig';
 import { activeCurrency } from '../../constants/currency';
+import QRScanner from '../../components/qr-scanner/QRScanner';
 
 const SingleUserEventPage = () => {
   const { eventID } = useParams();
@@ -207,6 +208,7 @@ const SingleUserEventPage = () => {
               </table>
             </div>
           </div>
+          {/* <QRScanner /> */}
         </div>
       )}
     </Fragment>
