@@ -23,7 +23,8 @@ This is an extended version of React template from [Stellar Minore](https://stel
 
 ```
  git clone https://github.com/kazmi066/react-tailwind-rtk-starter
- cd react-tailwind-rtk-starter
- npm i
- npm start
+npm install --global yarn or sudo npm install -g yarn for mac
+yarn install
+yarn start
+
 ```
