@@ -12,11 +12,14 @@ const CheckoutModal = ({
   setShowModal,
   ticket,
   numOfTicketSelected,
-  event
+  event,
+  coupon //added coupon
 }) => {
   const [loading, setLoading] = useState(true);
   const [checkoutDetails, setCheckoutDetails] = useState({});
   const [error, setError] = useState('');
+  const [couponError, setCouponError] = useState('');
+  //coupon error handling
   const { user } = useSelector((state) => state.auth);
   const { EventID, Name, image_url, location } = event;
   const { Name: LocationName } = location;
@@ -29,7 +32,8 @@ const CheckoutModal = ({
         {
           user_id: user.userID,
           ticket_category_id: ticket.CategoryID,
-          number_of_tickets: numOfTicketSelected
+          number_of_tickets: numOfTicketSelected,
+          coupon_code: coupon.DiscountID /* needed to double check logic */
         }
       );
 
@@ -37,6 +41,10 @@ const CheckoutModal = ({
         setCheckoutDetails(data);
         if (data.error_message?.length > 0) {
           setError(data.error_message);
+        }
+        if (data.coupon_error?.length > 0) {
+          /*coupon error handling*/
+          setCouponError(data.coupon_error);
         }
         setLoading(false);
       }
@@ -57,7 +65,7 @@ const CheckoutModal = ({
     if (showModal) {
       getCheckoutDetails();
     }
-  }, [showModal]);
+  }, [showModal, coupon]); //added coupon to dependency
 
   const handleProceedToPayment = () => {
     if (checkoutDetails.is_eligible_to_purchase) {
@@ -66,7 +74,8 @@ const CheckoutModal = ({
           ticket,
           numOfTicketSelected,
           event,
-          checkoutDetails
+          checkoutDetails,
+          coupon //added coupon
         }
       });
     }
@@ -134,6 +143,12 @@ const CheckoutModal = ({
                           ).toFixed(2)}
                         </p>
                       </div>
+                      // added coupon error info
+                      <p className="text-sm text-center text-red-500 ">
+                        {couponError.length > 0
+                          ? couponError
+                          : 'Sorry, your code is invalid'}
+                      </p>
                     </div>
                   ) : (
                     <div>
@@ -144,7 +159,21 @@ const CheckoutModal = ({
                       </p>
                     </div>
                   )}
-
+                  /* Coupon Code Input */
+                  <div className="flex flex-col gap-2">
+                    <input
+                      type="text"
+                      placeholder="Enter coupon code"
+                      value={coupon} //do i need to add the coupon here?
+                      className="p-2 border border-gray-300 rounded"
+                    />
+                    <button
+                      onClick={() => getCheckoutDetails()} //refetch from api
+                      className="p-2 text-white bg-blue-500 rounded"
+                    >
+                      Apply Coupon
+                    </button>
+                  </div>
                   <button
                     disabled={!checkoutDetails?.is_eligible_to_purchase}
                     onClick={handleProceedToPayment}
