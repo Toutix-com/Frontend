@@ -12,14 +12,14 @@ const CheckoutModal = ({
   setShowModal,
   ticket,
   numOfTicketSelected,
-  event,
-  coupon //added coupon
+  event
 }) => {
   const [loading, setLoading] = useState(true);
   const [checkoutDetails, setCheckoutDetails] = useState({});
   const [error, setError] = useState('');
   const [couponError, setCouponError] = useState('');
   //coupon error handling
+  const [couponCode, setCouponCode] = useState(''); // manage coupon code input
   const { user } = useSelector((state) => state.auth);
   const { EventID, Name, image_url, location } = event;
   const { Name: LocationName } = location;
@@ -33,7 +33,7 @@ const CheckoutModal = ({
           user_id: user.userID,
           ticket_category_id: ticket.CategoryID,
           number_of_tickets: numOfTicketSelected,
-          coupon_code: coupon.DiscountID /* needed to double check logic */
+          coupon_code: couponCode
         }
       );
 
@@ -65,7 +65,7 @@ const CheckoutModal = ({
     if (showModal) {
       getCheckoutDetails();
     }
-  }, [showModal, coupon]); //added coupon to dependency
+  }, [showModal, couponCode]); //added coupon to dependency
 
   const handleProceedToPayment = () => {
     if (checkoutDetails.is_eligible_to_purchase) {
@@ -75,7 +75,7 @@ const CheckoutModal = ({
           numOfTicketSelected,
           event,
           checkoutDetails,
-          coupon //added coupon
+          coupon: { DiscountID: couponCode }
         }
       });
     }
@@ -164,7 +164,8 @@ const CheckoutModal = ({
                     <input
                       type="text"
                       placeholder="Enter coupon code"
-                      value={coupon} //do i need to add the coupon here?
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value)}
                       className="p-2 border border-gray-300 rounded"
                     />
                     <button
